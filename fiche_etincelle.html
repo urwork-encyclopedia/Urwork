@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'étincelle — Encyclopédie des Processus Créatifs</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1612;
+    --paper: #f7f3ed;
+    --paper-dark: #ede8e0;
+    --accent: #c0392b;
+    --accent-light: #f5e6e4;
+    --gold: #b8860b;
+    --muted: #7a6f62;
+    --border: #d4cdc3;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  .page-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3rem 4rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    border: 1px solid rgba(247,243,237,0.08);
+  }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; right: 80px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    border: 1px solid rgba(247,243,237,0.06);
+  }
+
+  .breadcrumb {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(247,243,237,0.45);
+    margin-bottom: 1.5rem;
+  }
+  .breadcrumb span { color: rgba(247,243,237,0.25); margin: 0 6px; }
+
+  .entry-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+  h1 em {
+    font-style: italic;
+    color: rgba(247,243,237,0.55);
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .header-tag {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(247,243,237,0.5);
+    border: 1px solid rgba(247,243,237,0.15);
+    padding: 4px 10px;
+    border-radius: 2px;
+  }
+
+  /* ── Layout ── */
+  .content {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 3rem 4rem 5rem;
+  }
+
+  /* ── Definition block ── */
+  .definition {
+    border-left: 3px solid var(--accent);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--accent-light);
+    border-radius: 0 4px 4px 0;
+  }
+  .definition p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+
+  /* ── Sections ── */
+  .section { margin: 3.5rem 0; }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-bottom: 1.25rem;
+    color: var(--ink);
+  }
+
+  p { margin-bottom: 1rem; font-size: 1rem; }
+
+  /* ── Manifestations cards ── */
+  .manifests {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 1.5rem 0;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .manifest-card {
+    background: var(--paper);
+    padding: 1.25rem;
+    transition: background 0.2s;
+  }
+  .manifest-card:hover { background: var(--paper-dark); }
+  .manifest-icon {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+  .manifest-title {
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-bottom: 0.35rem;
+    color: var(--ink);
+  }
+  .manifest-desc {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* ── Quote block ── */
+  .quote-block {
+    margin: 2.5rem 0;
+    padding: 2rem 2.5rem;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 4px;
+    position: relative;
+  }
+  .quote-mark {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    line-height: 1;
+    color: rgba(247,243,237,0.12);
+    position: absolute;
+    top: 0.5rem;
+    left: 1.5rem;
+  }
+  .quote-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+  }
+  .quote-author {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(247,243,237,0.45);
+  }
+
+  /* ── Tips list ── */
+  .tips {
+    list-style: none;
+    margin: 1.5rem 0;
+  }
+  .tips li {
+    padding: 0.9rem 1rem 0.9rem 3rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    font-size: 0.95rem;
+    transition: background 0.15s;
+  }
+  .tips li:first-child { border-top: 1px solid var(--border); }
+  .tips li:hover { background: var(--paper-dark); }
+  .tips li::before {
+    content: attr(data-n);
+    position: absolute;
+    left: 1rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.8rem;
+    color: var(--accent);
+    font-weight: 700;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  /* ── Portrait créateur ── */
+  .portrait {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 1.5rem 0;
+  }
+  .portrait-header {
+    background: var(--gold);
+    color: var(--paper);
+    padding: 0.6rem 1.25rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .portrait-body {
+    padding: 1.25rem 1.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+  .portrait-initial {
+    width: 52px;
+    height: 52px;
+    background: var(--paper-dark);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  .portrait-name {
+    font-weight: 500;
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+  }
+  .portrait-role {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+  .portrait-text {
+    font-size: 0.9rem;
+    color: var(--ink);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* ── À retenir ── */
+  .retenir {
+    margin: 3rem 0 0;
+    padding: 1.5rem 2rem;
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    background: var(--accent-light);
+  }
+  .retenir-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+  .retenir p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* ── Footer ── */
+  .page-footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+  .footer-title { font-family: 'Playfair Display', serif; font-style: italic; }
+
+  @media (max-width: 640px) {
+    .page-header { padding: 2rem 1.5rem; }
+    .content { padding: 2rem 1.5rem 4rem; }
+    .page-footer { padding: 1.25rem 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="breadcrumb">Encyclopédie des processus créatifs <span>›</span> Les phases du processus <span>›</span> Entrée 01</div>
+  <div class="entry-number">Entrée 01 / Phase initiale</div>
+  <h1>L'étincelle <em>&</em><br>le déclencheur</h1>
+  <div class="header-meta">
+    <span class="header-tag">Universelle</span>
+    <span class="header-tag">Imprévisible</span>
+    <span class="header-tag">Fugace</span>
+  </div>
+</header>
+
+<main class="content">
+
+  <div class="definition">
+    <p>Moment bref et souvent inattendu où une idée surgit — une image, une sensation, une connexion entre deux éléments disparates. L'étincelle n'est pas encore une idée formée : c'est le signal que quelque chose veut exister.</p>
+  </div>
+
+  <!-- Ce que c'est -->
+  <section class="section">
+    <div class="section-label">Ce que c'est</div>
+    <h2>Le surgissement</h2>
+    <p>L'étincelle est le moment zéro du processus créatif. Elle précède toute intention consciente : on ne décide pas d'avoir une étincelle, on la reçoit. Elle peut prendre la forme d'une image mentale soudaine, d'une question qui accroche, d'un mot entendu qui résonne autrement, d'un problème qui bascule en solution.</p>
+    <p>Elle se distingue de l'idée développée en ceci qu'elle est <em>incomplète par nature</em> — un fragment lumineux qui demande à être poursuivi, pas encore une direction claire. Sa fragilité est constitutive : elle s'évanouit aussi vite qu'elle apparaît si on ne lui prête pas attention.</p>
+  </section>
+
+  <!-- Comment ça se manifeste -->
+  <section class="section">
+    <div class="section-label">Comment ça se manifeste</div>
+    <h2>Ses formes les plus courantes</h2>
+
+    <div class="manifests">
+      <div class="manifest-card">
+        <div class="manifest-icon">👁</div>
+        <div class="manifest-title">L'image</div>
+        <p class="manifest-desc">Une scène, une couleur, un visage surgit sans prévenir. Fréquent chez les peintres, cinéastes, écrivains.</p>
+      </div>
+      <div class="manifest-card">
+        <div class="manifest-icon">🔗</div>
+        <div class="manifest-title">La connexion</div>
+        <p class="manifest-desc">Deux idées sans rapport apparent se rapprochent et produisent quelque chose de nouveau. Moteur de l'invention.</p>
+      </div>
+      <div class="manifest-card">
+        <div class="manifest-icon">❓</div>
+        <div class="manifest-title">La question</div>
+        <p class="manifest-desc">Un "et si…?" ou un "pourquoi pas…?" qui ouvre une brèche dans l'évidence. Souvent déclenchée par la friction.</p>
+      </div>
+      <div class="manifest-card">
+        <div class="manifest-icon">🌀</div>
+        <div class="manifest-title">L'anomalie</div>
+        <p class="manifest-desc">Quelque chose qui ne va pas — une erreur, un accident, un détail incongru — attire l'attention et ouvre une piste.</p>
+      </div>
+      <div class="manifest-card">
+        <div class="manifest-icon">🎵</div>
+        <div class="manifest-title">La sensation</div>
+        <p class="manifest-desc">Un son, une odeur, une texture qui ramène quelque chose d'enfoui. Mémoire involontaire mise en forme créative.</p>
+      </div>
+      <div class="manifest-card">
+        <div class="manifest-icon">🌙</div>
+        <div class="manifest-title">Le demi-sommeil</div>
+        <p class="manifest-desc">L'état hypnagogique entre veille et sommeil est l'un des terrains les plus fertiles pour l'étincelle.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portraits -->
+  <section class="section">
+    <div class="section-label">Éclairages de créateurs</div>
+    <h2>Comment d'autres l'ont vécu</h2>
+
+    <div class="portrait">
+      <div class="portrait-header">Portrait · Architecture</div>
+      <div class="portrait-body">
+        <div class="portrait-initial">JU</div>
+        <div>
+          <div class="portrait-name">Jørn Utzon</div>
+          <div class="portrait-role">Architecte (Opéra de Sydney)</div>
+          <p class="portrait-text">L'idée des coques de l'Opéra de Sydney serait née en épluchant une orange. Les segments d'écorce, posés les uns contre les autres, lui auraient révélé la logique structurelle qu'il cherchait depuis des semaines. L'étincelle ici est géométrique, tactile, surgit dans un geste anodin.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="portrait">
+      <div class="portrait-header">Portrait · Littérature</div>
+      <div class="portrait-body">
+        <div class="portrait-initial">MS</div>
+        <div>
+          <div class="portrait-name">Mary Shelley</div>
+          <div class="portrait-role">Romancière (Frankenstein)</div>
+          <p class="portrait-text">Frankenstein est né d'une vision nocturne, presque hallucinatoire, survenue lors d'une nuit de veille au bord du lac de Genève. Shelley a vu le monstre avant d'avoir une histoire. L'image est venue d'abord, le récit a suivi. Elle note que c'est l'étincelle qui lui a "donné" le livre.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="portrait">
+      <div class="portrait-header">Portrait · Musique</div>
+      <div class="portrait-body">
+        <div class="portrait-initial">PM</div>
+        <div>
+          <div class="portrait-name">Paul McCartney</div>
+          <div class="portrait-role">Musicien (Beatles)</div>
+          <p class="portrait-text">La mélodie de Yesterday est venue dans un rêve. À son réveil, McCartney avait si peur qu'elle ne soit pas originale qu'il a mis des semaines à accepter qu'elle lui appartenait. L'étincelle peut être si complète, si parfaite, qu'elle semble venir d'ailleurs — ce sentiment d'étrangeté est très documenté.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Citation -->
+  <div class="quote-block">
+    <div class="quote-mark">"</div>
+    <p class="quote-text">Une idée, c'est une connexion. Votre cerveau est expert pour trouver des connexions entre les choses — même là où il n'y en a pas. C'est ça, la créativité.</p>
+    <div class="quote-author">— Kevin Ashton, How to Fly a Horse</div>
+  </div>
+
+  <!-- Comment l'activer -->
+  <section class="section">
+    <div class="section-label">Comment l'activer</div>
+    <h2>Créer les conditions favorables</h2>
+    <p>On ne provoque pas une étincelle par la volonté. On crée les conditions qui la rendent probable.</p>
+
+    <ul class="tips">
+      <li data-n="01"><strong>Se mettre en état de disponibilité.</strong> L'étincelle survient rarement dans la concentration forcée. La marche, le bain, les tâches automatiques (vaisselle, conduite) laissent le cerveau divaguer — c'est là que le réseau par défaut fait des connexions inattendues.</li>
+      <li data-n="02"><strong>Accumuler des matériaux.</strong> Plus on nourrit son attention (lectures, rencontres, observations), plus on donne au cerveau de quoi rapprocher. L'étincelle est souvent une synthèse inconsciente de tout ce qu'on a absorbé.</li>
+      <li data-n="03"><strong>Tenir un carnet à portée de main.</strong> L'étincelle est fugace. Elle ne "reviendra pas" si on ne la note pas immédiatement. Un carnet physique ou une application vocale au réveil peut changer radicalement la quantité d'idées captées.</li>
+      <li data-n="04"><strong>Pratiquer la contrainte.</strong> Se donner une limite (un mot imposé, un format interdit, un délai absurde) force le cerveau à chercher des solutions inhabituelles. La contrainte est un générateur d'étincelles.</li>
+      <li data-n="05"><strong>Croiser les domaines.</strong> Lire en dehors de son champ, fréquenter des créateurs d'autres disciplines. Les étincelles naissent souvent à la frontière entre deux mondes qui ne se connaissent pas.</li>
+      <li data-n="06"><strong>Accepter le temps mort.</strong> L'ennui, contrairement à ce qu'on croit, est propice. Ne pas combler chaque silence avec un écran laisse l'esprit errer — et errer, c'est chercher sans le savoir.</li>
+    </ul>
+  </section>
+
+  <!-- Pièges -->
+  <section class="section">
+    <div class="section-label">Pièges fréquents</div>
+    <h2>Ce qui étouffe l'étincelle</h2>
+    <p><strong>La sur-sollicitation.</strong> Un esprit constamment occupé — notifications, flux, urgences — n'a pas l'espace pour les associations libres. La disponibilité mentale est une ressource qui s'épuise et se protège.</p>
+    <p><strong>Le perfectionnisme prématuré.</strong> Juger une étincelle avant de lui laisser le temps d'exister. "Ce n'est pas original", "ça ne marchera pas" — ces réflexes tuent les idées à l'état embryonnaire. La première étape est de capter, pas d'évaluer.</p>
+    <p><strong>L'attente passive.</strong> Certains créateurs attendent l'inspiration comme un événement miraculeux. L'étincelle récompense généralement ceux qui travaillent, expérimentent, se frottent à leur matériau — elle survient plus souvent pendant qu'on fait quelque chose qu'en restant immobile.</p>
+  </section>
+
+  <!-- À retenir -->
+  <div class="retenir">
+    <div class="retenir-label">À retenir</div>
+    <p>L'étincelle ne se commande pas, mais elle se cultive. Elle récompense la disponibilité, la curiosité nourrie et l'habitude de noter. Sa fragilité est sa nature même : elle demande à être accueillie, pas saisie de force.</p>
+  </div>
+
+</main>
+
+<footer class="page-footer">
+  <span class="footer-title">Encyclopédie des Processus Créatifs</span>
+  <span>Entrée 01 · Les phases du processus · L'étincelle</span>
+</footer>
+
+</body>
+</html>
