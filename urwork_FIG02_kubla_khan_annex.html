@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urwork — Kubla Khan · The Poem in Three Layers · FIG–02</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0c0a07;--bg2:#141210;--bg3:#1c1a16;
+  --bone:#f0ebe3;--bone2:rgba(240,235,227,0.82);--bone3:rgba(240,235,227,0.52);--bone4:rgba(240,235,227,0.22);
+  --accent:#c0392b;--ab:#f07868;--gold:#c8943a;
+  --dream-b:#4a7fa5;--dream-bg:rgba(74,127,165,0.14);--dream-c:#7ab8e8;
+  --porlock-b:#a05030;--porlock-bg:rgba(160,80,48,0.14);--porlock-c:#e8a882;
+  --waking-b:#4a7a3a;--waking-bg:rgba(74,122,58,0.14);--waking-c:#80c860;
+  --cormorant:'Cormorant Garamond',serif;--sans:'DM Sans',sans-serif;
+}
+html{background:var(--bg);color:var(--bone);font-family:var(--sans);font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{max-width:100%;margin:0;padding:0}
+
+/* HEADER */
+.hdr{padding:1.75rem 4rem 1.5rem;border-bottom:.5px solid rgba(240,235,227,0.1);display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:var(--cormorant);font-size:1.3rem;font-weight:300;letter-spacing:-.02em}
+.logo em{font-style:italic;color:var(--ab)}
+.ref{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--bone3)}
+.ref b{color:var(--ab)}
+
+/* TITLE */
+.ttl{padding:3rem 4rem 2.25rem;text-align:center;position:relative}
+.eyebrow{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--ab);margin-bottom:1rem;opacity:0;animation:fu .7s .1s ease forwards}
+.ttl h1{font-family:var(--cormorant);font-size:clamp(2rem,5vw,3.6rem);font-weight:300;line-height:1.1;letter-spacing:-.02em;color:var(--bone);margin-bottom:.5rem;opacity:0;animation:fu .7s .3s ease forwards}
+.ttl h1 em{font-style:italic;color:rgba(240,235,227,0.38)}
+.tsub{font-family:var(--cormorant);font-style:italic;font-size:1rem;color:var(--bone3);margin-bottom:.4rem;opacity:0;animation:fu .7s .5s ease forwards}
+.tinfo{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(240,235,227,0.58);opacity:0;animation:fu .7s .7s ease forwards}
+@keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* CONTROLS */
+.ctrl-bar{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:.5px solid rgba(240,235,227,0.08);padding:.9rem 4rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.ctrl-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone3);margin-right:.25rem}
+.cbtn{display:inline-flex;align-items:center;gap:.45rem;padding:4px 13px;border-radius:2px;font-size:.78rem;cursor:pointer;border:none;background:transparent;font-family:var(--sans);font-weight:300;letter-spacing:.04em;transition:all .18s}
+.cbtn-all{color:var(--bone3);border:.5px solid rgba(240,235,227,0.18)}
+.cbtn-all.on,.cbtn-all:hover{background:rgba(240,235,227,0.08);color:var(--bone2)}
+.cbtn-dream{color:var(--dream-c);border:.5px solid rgba(74,127,165,0.4)}
+.cbtn-dream.on,.cbtn-dream:hover{background:var(--dream-bg)}
+.cbtn-porlock{color:var(--porlock-c);border:.5px solid rgba(160,80,48,0.4)}
+.cbtn-porlock.on,.cbtn-porlock:hover{background:var(--porlock-bg)}
+.cbtn-waking{color:var(--waking-c);border:.5px solid rgba(74,122,58,0.4)}
+.cbtn-waking.on,.cbtn-waking:hover{background:var(--waking-bg)}
+.csep{width:.5px;height:16px;background:rgba(240,235,227,0.1)}
+.cdot{width:7px;height:7px;border-radius:50%}
+.dream .cdot{background:var(--dream-b)}
+.porlock .cdot{background:var(--porlock-b)}
+.waking .cdot{background:var(--waking-b)}
+
+/* INTRO */
+.intro{max-width:780px;margin:0 auto;padding:2.5rem 4rem 1.5rem}
+.intro p{font-size:.88rem;line-height:1.9;color:var(--bone2);margin-bottom:.75rem}
+.legend{display:flex;gap:2rem;flex-wrap:wrap;margin-top:1.75rem;padding-top:1.75rem;border-top:.5px solid rgba(240,235,227,0.08)}
+.leg-item{display:flex;gap:.75rem;max-width:210px}
+.leg-stripe{width:3px;border-radius:2px;flex-shrink:0;align-self:stretch;min-height:36px}
+.leg-stripe.dream{background:var(--dream-b)}
+.leg-stripe.porlock{background:var(--porlock-b)}
+.leg-stripe.waking{background:var(--waking-b)}
+.leg-name{font-size:8px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.25rem}
+.leg-name.dream{color:var(--dream-c)}
+.leg-name.porlock{color:var(--porlock-c)}
+.leg-name.waking{color:var(--waking-c)}
+.leg-desc{font-size:.76rem;color:var(--bone3);line-height:1.6}
+
+/* STANZA HEADER */
+.stanza-hdr{max-width:780px;margin:3rem auto 0;padding:0 4rem}
+.sh-inner{border-top:.5px solid rgba(240,235,227,0.1);padding-top:1rem;display:flex;align-items:baseline;gap:1rem}
+.sh-num{font-family:var(--cormorant);font-size:2.6rem;font-weight:300;color:rgba(240,235,227,0.38);line-height:1}
+.sh-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone3)}
+
+/* POEM LINES */
+.poem-body{max-width:780px;margin:0 auto;padding:0 4rem .5rem}
+
+.lb{display:grid;grid-template-columns:2.2rem 1fr;gap:0 1.25rem;align-items:start;padding:.5rem 0 .5rem .25rem;border-radius:3px;cursor:pointer;position:relative;transition:opacity .25s,background .15s}
+.lb::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;border-radius:1px 0 0 1px;opacity:0;transition:opacity .2s}
+.lb:hover::before,.lb.open::before{opacity:1}
+.lb.dream::before{background:var(--dream-b)}
+.lb.porlock::before{background:var(--porlock-b)}
+.lb.waking::before{background:var(--waking-b)}
+.lb:hover{background:rgba(240,235,227,0.04)}
+.lb.open{background:rgba(240,235,227,0.05)}
+
+.lnum{font-size:.68rem;color:rgba(240,235,227,0.55);font-family:var(--cormorant);padding-top:.25rem;text-align:right;user-select:none}
+.lright{display:flex;flex-direction:column;gap:.3rem}
+.ltrow{display:flex;align-items:baseline;gap:.75rem;flex-wrap:wrap}
+.ltext{font-family:var(--cormorant);font-size:1.15rem;font-weight:300;line-height:1.5;color:var(--bone)}
+.ltext.ind{padding-left:1.5rem}
+.ltext.ind2{padding-left:3rem}
+
+.lbadge{font-size:8px;letter-spacing:.15em;text-transform:uppercase;padding:2px 7px;border-radius:1px;opacity:0;transition:opacity .2s}
+.lb:hover .lbadge,.lb.open .lbadge{opacity:1}
+.dream .lbadge{background:var(--dream-bg);color:var(--dream-c);border:.5px solid rgba(74,127,165,0.4)}
+.porlock .lbadge{background:var(--porlock-bg);color:var(--porlock-c);border:.5px solid rgba(160,80,48,0.4)}
+.waking .lbadge{background:var(--waking-bg);color:var(--waking-c);border:.5px solid rgba(74,122,58,0.4)}
+
+/* ANNOTATION */
+.ann{display:none;padding:.6rem 0 .6rem;margin-top:.1rem}
+.lb.open .ann{display:block}
+.ann p{font-size:.81rem;line-height:1.85;color:var(--bone2);margin-bottom:.5rem}
+.ann p:last-child{margin-bottom:0}
+.ann strong{font-weight:500;color:var(--bone)}
+.ann em{font-style:italic}
+
+/* FILTER */
+body.f-dream .lb.porlock,body.f-dream .lb.waking{opacity:.18}
+body.f-porlock .lb.dream,body.f-porlock .lb.waking{opacity:.18}
+body.f-waking .lb.dream,body.f-waking .lb.porlock{opacity:.18}
+
+/* STRUCT NOTE */
+.struct-note{max-width:780px;margin:3rem auto 0;padding:1.25rem 4rem;border-top:.5px solid rgba(240,235,227,0.08);border-bottom:.5px solid rgba(240,235,227,0.08)}
+.struct-note p{font-size:.78rem;font-style:italic;color:var(--bone3);line-height:1.85}
+.struct-note strong{font-style:normal;color:var(--bone2);font-weight:500}
+
+/* CLOSING */
+.closing{max-width:780px;margin:0 auto;padding:2rem 4rem 3.5rem}
+.closing p{font-size:.76rem;color:rgba(240,235,227,0.58);line-height:1.8}
+.closing a{color:rgba(240,235,227,0.5);text-decoration:none;border-bottom:.5px solid rgba(240,235,227,0.18)}
+
+/* FOOTER */
+.ft{border-top:.5px solid rgba(240,235,227,0.08);padding:1.25rem 4rem;display:flex;justify-content:space-between;align-items:center}
+.fl{font-family:var(--cormorant);font-size:1.1rem;font-weight:300}
+.fl em{font-style:italic;color:var(--ab)}
+.fr{font-size:.7rem;color:rgba(240,235,227,0.58);text-align:right;line-height:1.6}
+
+@media(max-width:680px){
+  /* Paddings latéraux */
+  .hdr,.ttl,.ctrl-bar,.intro,.stanza-hdr,.poem-body,.struct-note,.closing,.ft{padding-left:1.25rem;padding-right:1.25rem}
+  /* Légende */
+  .legend{flex-direction:column;gap:1rem}.leg-item{max-width:100%}
+  /* Barre de contrôle : boutons plus compacts */
+  .ctrl-bar{padding-top:.7rem;padding-bottom:.7rem;gap:.5rem}
+  .cbtn{padding:4px 10px;font-size:.74rem}
+  .ctrl-label{display:none} /* Masquer le label "Filter :" sur petit écran */
+  .csep{display:none} /* Sans label, le séparateur est orphelin */
+  /* Lignes de poème : numéro plus petit */
+  .lb{grid-template-columns:1.8rem 1fr;gap:0 .9rem}
+  .lnum{font-size:.6rem}
+  .ltext{font-size:1.05rem}
+  .ltext.ind{padding-left:1rem}
+  .ltext.ind2{padding-left:2rem}
+  /* Annotations */
+  .ann p{font-size:.79rem;line-height:1.8}
+  /* Titres */
+  .ttl h1{font-size:clamp(1.7rem,7.5vw,2.6rem)}
+  /* Footer empilé */
+  .ft{flex-direction:column;gap:.35rem;text-align:center}
+  .fr{text-align:center}
+}
+@media(max-width:400px){
+  .cbtn{padding:3px 8px;font-size:.7rem}
+  .ltext{font-size:1rem}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="logo">Ur<em>work</em></div>
+  <div class="ref">Interactive annex &middot; <b>FIG&ndash;02</b> &middot; Coleridge &middot; Kubla Khan</div>
+</header>
+
+<div class="ttl">
+  <div class="eyebrow">The poem in three layers &middot; Line-by-line annotation &middot; Interactive annex</div>
+  <h1>Kubla Khan<br><em>or A Vision in a Dream</em></h1>
+  <p class="tsub">What the dream dictated, what Porlock interrupted, what waking consciousness built &mdash; S. T. Coleridge, 1797&ndash;1816</p>
+  <p class="tinfo">Samuel Taylor Coleridge &middot; First published 1816, John Murray &middot; Composed c. October 1797</p>
+</div>
+
+<div class="ctrl-bar" id="ctrlbar">
+  <span class="ctrl-label">Show layer</span>
+  <button class="cbtn cbtn-all on" id="btn-all" aria-pressed="true" onclick="setFilter('all')">All layers</button>
+  <div class="csep"></div>
+  <button class="cbtn cbtn-dream dream" id="btn-dream" aria-pressed="false" onclick="setFilter('dream')"><span class="cdot"></span>Dream</button>
+  <button class="cbtn cbtn-porlock porlock" id="btn-porlock" aria-pressed="false" onclick="setFilter('porlock')"><span class="cdot"></span>Porlock</button>
+  <button class="cbtn cbtn-waking waking" id="btn-waking" aria-pressed="false" onclick="setFilter('waking')"><span class="cdot"></span>Waking</button>
+</div>
+
+<div class="intro">
+  <p>The fifty-four lines of <em>Kubla Khan</em> are not of a single piece. Coleridge's preface claims they arrived in a dream — but the poem's internal evidence, and a century of scholarship, suggest something more complex: a text assembled from at least three different modes of production, each with its own texture and its own kind of attention.</p>
+  <p>Click any line to open its annotation. Use the filters above to isolate each layer and read it as a continuous strand.</p>
+  <div class="legend">
+    <div class="leg-item"><div class="leg-stripe dream"></div><div><div class="leg-name dream">Dream</div><div class="leg-desc">Images traceable to Coleridge's saturated reading (Lowes); involuntary syntax; hallucinatory density. The composition the preface claims.</div></div></div>
+    <div class="leg-item"><div class="leg-stripe porlock"></div><div><div class="leg-name porlock">Porlock</div><div class="leg-desc">The pivot: where the poem meets its own limit. The vision fractures, turns prophetic, becomes a threshold — what the "interruption" cuts off.</div></div></div>
+    <div class="leg-item"><div class="leg-stripe waking"></div><div><div class="leg-name waking">Waking</div><div class="leg-desc">First-person reflection; the poet contemplating his own inspiration from outside it; the construction of the Romantic creator as figure.</div></div></div>
+  </div>
+</div>
+
+<!-- STANZA I -->
+<div class="stanza-hdr"><div class="sh-inner"><span class="sh-num">I</span><span class="sh-label">The Decree &middot; lines 1–11</span></div></div>
+<div class="poem-body" id="s1">
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">1</span><div class="lright"><div class="ltrow"><span class="ltext">In Xanadu did Kubla Khan</span><span class="lbadge">Dream</span></div><div class="ann"><p>The opening names <strong>Xanadu</strong> — Coleridge's transliteration of Shangdu, the Mongol summer capital. The source is <em>Purchas his Pilgrimage</em> — Coleridge cites a passage from the 1617 edition in his own preface of 1816 — specifically a passage from Book IV describing Kubla Khan's palace. It is not the last sentence of the book but the particular passage he was reading before falling asleep. The proper name arrives already sonorous, already a decree. No preparation, no approach — the poem begins in mid-authority.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">2</span><div class="lright"><div class="ltrow"><span class="ltext">A stately pleasure-dome decree:</span><span class="lbadge">Dream</span></div><div class="ann"><p>The verb <em>decree</em> is end-placed, as if the act of decreeing is itself what the line performs. Lowes traces <em>pleasure-dome</em> to no single source — it is a compound that the dream-work fabricated. The word <em>stately</em> arrives already worn smooth by reading.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">3</span><div class="lright"><div class="ltrow"><span class="ltext">Where Alph, the sacred river, ran</span><span class="lbadge">Dream</span></div><div class="ann"><p><strong>Alph</strong>: no river of this name exists. Lowes proposed composite origins — the Alpheus of Greek mythology (the river that flows underground and resurfaces), the Nile sources described by James Bruce, rivers in William Bartram's <em>Travels</em> (1791). The dream fused several rivers into one impossible name: sacred, lettered, resonant.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">4</span><div class="lright"><div class="ltrow"><span class="ltext">Through caverns measureless to man</span><span class="lbadge">Dream</span></div><div class="ann"><p><em>Measureless to man</em> — the phrase performs what it names: the caverns exceed the scale of human reckoning. Lowes found echoes in multiple travel narratives Coleridge had absorbed. The phrase has the quality of something <em>received</em>: its cadence is too perfect to feel invented.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">5</span><div class="lright"><div class="ltrow"><span class="ltext">Down to a sunless sea.</span><span class="lbadge">Dream</span></div><div class="ann"><p>The full stop after the fifth line ends the first syntactic unit — a single sentence establishing the entire geography: palace, river, caverns, a sea that receives no light. The <em>sunless sea</em> will be answered at line 28 by the <em>lifeless ocean</em>. The dream mapped the structure in advance.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">6</span><div class="lright"><div class="ltrow"><span class="ltext">So twice five miles of fertile ground</span><span class="lbadge">Dream</span></div><div class="ann"><p>The geographic precision — <em>twice five miles</em> — is a direct trace of Purchas: <em>"thus ten miles of fertile ground were inclosed within a wall."</em> The dream has rephrased the source with almost mathematical exactness, converting prose measurement into verse without losing the number.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">7</span><div class="lright"><div class="ltrow"><span class="ltext">With walls and towers were girdled round:</span><span class="lbadge">Dream</span></div><div class="ann"><p>The enclosure — <em>girdled round</em> — sets the formal paradox of the poem's landscape: a garden of controlled pleasure within walls, with a wild chasm just beyond them. The structure of the poem echoes the structure of the domain.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">8</span><div class="lright"><div class="ltrow"><span class="ltext">And there were gardens bright with sinuous rills,</span><span class="lbadge">Dream</span></div><div class="ann"><p><em>Sinuous rills</em> — Bartram's <em>Travels</em> describes the botanical richness of the American South with exactly this kind of winding, profuse water imagery. The word <em>sinuous</em> carries the bodily quality of a snake, of something alive and unpredictable within the ordered garden.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">9</span><div class="lright"><div class="ltrow"><span class="ltext">Where blossomed many an incense-bearing tree;</span><span class="lbadge">Dream</span></div><div class="ann"><p>Bartram again — aromatic trees, botanical exuberance. The garden is sensory: it can be smelled. <em>Incense-bearing</em> introduces a quasi-religious register that will deepen toward line 14 (<em>as holy and enchanted</em>).</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">10</span><div class="lright"><div class="ltrow"><span class="ltext">And here were forests ancient as the hills,</span><span class="lbadge">Dream</span></div><div class="ann"><p>The landscape deepens in time: the forests are as old as the hills — pre-human, pre-historical. The poem is constructing an order that precedes Kubla Khan's decree, a natural world that the pleasure garden attempts to contain.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">11</span><div class="lright"><div class="ltrow"><span class="ltext">Enfolding sunny spots of greenery.</span><span class="lbadge">Dream</span></div><div class="ann"><p>The stanza closes on a pastoral image — sunlit clearings within the ancient forest. The word <em>enfolding</em> suggests shelter, almost mothering. The next line will shatter this with an abrupt exclamation: <em>But oh!</em> The contrast is structurally violent.</p></div></div></div>
+
+</div>
+
+<!-- STANZA II -->
+<div class="stanza-hdr"><div class="sh-inner"><span class="sh-num">II</span><span class="sh-label">The Chasm &middot; lines 12–36</span></div></div>
+<div class="poem-body" id="s2">
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">12</span><div class="lright"><div class="ltrow"><span class="ltext">But oh! that deep romantic chasm which slanted</span><span class="lbadge">Dream</span></div><div class="ann"><p><em>But oh!</em> — the exclamation marks a rupture in the poem's composure. The garden's order is broken by the chasm. <em>Romantic</em> here means wild, sublime, untamed — not the literary movement. The chasm <em>slants</em>: it is oblique, not vertical, which gives it geological credibility and formal instability simultaneously.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">13</span><div class="lright"><div class="ltrow"><span class="ltext">Down the green hill athwart a cedarn cover!</span><span class="lbadge">Dream</span></div><div class="ann"><p><em>Cedarn</em> — a Miltonic adjective, rare, constructed from <em>cedar</em>. The word signals the influence of Milton's elevated diction on Coleridge's dream-work. The <em>cover</em> of cedar trees makes the chasm a concealed wound in the landscape.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">14</span><div class="lright"><div class="ltrow"><span class="ltext">A savage place! as holy and enchanted</span><span class="lbadge">Dream</span></div><div class="ann"><p>The paradox is structural: <em>savage</em> and <em>holy</em> are held in the same phrase without resolution. The chasm is both dangerous and sacred — the kind of impossible co-presence characteristic of dream logic, where contradictions coexist without needing to be resolved.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">15</span><div class="lright"><div class="ltrow"><span class="ltext">As e'er beneath a waning moon was haunted</span><span class="lbadge">Dream</span></div><div class="ann"><p>The <em>waning moon</em> — not full, not new, but diminishing — introduces the gothic-erotic atmosphere that culminates in the next line. The word <em>haunted</em> prepares the demon lover.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">16</span><div class="lright"><div class="ltrow"><span class="ltext">By woman wailing for her demon-lover!</span><span class="lbadge">Dream</span></div><div class="ann"><p>The most unguarded image in the poem: a woman wailing for a demon lover. No context, no narrative — the image arrives complete and refuses explanation. This is characteristic of dream production: the image is fully formed but entirely without justification. The <em>demon-lover</em> echoes the supernatural eroticism of <em>Christabel</em>.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">17</span><div class="lright"><div class="ltrow"><span class="ltext">And from this chasm, with ceaseless turmoil seething,</span><span class="lbadge">Dream</span></div><div class="ann"><p>The chasm now erupts. <em>Ceaseless turmoil seething</em> — the participial accumulation enacts the restlessness. This is the poem's energetic centre: the chasm is not merely a wound but a generative force, endlessly active.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">18</span><div class="lright"><div class="ltrow"><span class="ltext">As if this earth in fast thick pants were breathing,</span><span class="lbadge">Dream</span></div><div class="ann"><p>The earth breathes — rapidly, thickly. The simile is bodily, almost sexual: the landscape is a living body in a state of arousal or exertion. <em>Fast thick pants</em> is metrically odd, deliberately laboured, mimicking the breath it describes.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">19</span><div class="lright"><div class="ltrow"><span class="ltext">A mighty fountain momently was forced:</span><span class="lbadge">Dream</span></div><div class="ann"><p><em>Momently</em> — at every moment, continuously. The fountain is not a periodic event but a constant irruption. The passive construction <em>was forced</em>: the fountain is compelled upward by some interior pressure, not chosen. The dream-work expresses the exact phenomenology of its own production.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">20</span><div class="lright"><div class="ltrow"><span class="ltext">Amid whose swift half-intermitted burst</span><span class="lbadge">Dream</span></div><div class="ann"><p><em>Half-intermitted</em> — partially interrupted, pulsing. The fountain's rhythm mirrors the poem's own compositional claim: not a continuous flow but a series of bursts, of which only part was captured before interruption.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">21</span><div class="lright"><div class="ltrow"><span class="ltext">Huge fragments vaulted like rebounding hail,</span><span class="lbadge">Dream</span></div><div class="ann"><p><strong><em>Huge fragments</em></strong> — the word <em>fragments</em> in a poem that is itself a fragment is impossible to read as innocent. The erupting fountain throws up pieces of rock that do not cohere; the poem is doing the same. The simile — <em>rebounding hail</em> — is precise, rapid, almost violent.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">22</span><div class="lright"><div class="ltrow"><span class="ltext">Or chaffy grain beneath the thresher's flail:</span><span class="lbadge">Dream</span></div><div class="ann"><p>A second simile — agricultural, separating grain from chaff. The double simile (hail, then flail) is a signature of dream accumulation: the image doesn't settle on one comparison but keeps generating alternatives.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">23</span><div class="lright"><div class="ltrow"><span class="ltext">And 'mid these dancing rocks at once and ever</span><span class="lbadge">Dream</span></div><div class="ann"><p><em>At once and ever</em> — simultaneously and always. The rocks dance: the geological is animated, rhythmic. The phrase compresses two temporal registers — the instantaneous and the eternal — into four syllables.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">24</span><div class="lright"><div class="ltrow"><span class="ltext">It flung up momently the sacred river.</span><span class="lbadge">Dream</span></div><div class="ann"><p>The chasm generates the river: the Alph is not a pre-existing watercourse but the product of the chasm's continuous eruption. Creation — the poem suggests — comes from the wound, not the garden.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">25</span><div class="lright"><div class="ltrow"><span class="ltext">Five miles meandering with a mazy motion</span><span class="lbadge">Dream</span></div><div class="ann"><p>The alliteration — <em>meandering… mazy motion</em> — is almost too dense: the sound enacts the wandering it describes. Bartram's rivers in the <em>Travels</em> are described with exactly this quality of labyrinthine movement.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">26</span><div class="lright"><div class="ltrow"><span class="ltext">Through wood and dale the sacred river ran,</span><span class="lbadge">Dream</span></div><div class="ann"><p>The pastoral English landscape of the Quantock Hills where Coleridge was living bleeds into the imagined Mongol geography. <em>Wood and dale</em>: Somerset. Dream cartography refuses the distinction between the familiar and the invented.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">27</span><div class="lright"><div class="ltrow"><span class="ltext">Then reached the caverns measureless to man,</span><span class="lbadge">Dream</span></div><div class="ann"><p>The phrase <em>caverns measureless to man</em> returns from line 4 — a verbal rhyme across twenty-three lines. The dream-work is architecturally coherent: it built a structure that closes on itself.</p></div></div></div>
+
+<div class="lb dream" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">28</span><div class="lright"><div class="ltrow"><span class="ltext">And sank in tumult to a lifeless ocean:</span><span class="lbadge">Dream</span></div><div class="ann"><p>The river completes its cycle: born from the chasm, it sinks into the <em>lifeless ocean</em> — the answer to the <em>sunless sea</em> of line 5. The colon marks an arrival that is simultaneously an ending. The poem turns.</p></div></div></div>
+
+<div class="lb porlock" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">29</span><div class="lright"><div class="ltrow"><span class="ltext">And 'mid this tumult Kubla heard from far</span><span class="lbadge">Porlock</span></div><div class="ann"><p><strong>The pivot.</strong> Kubla Khan — the figure who has decreed and enclosed — now hears. He is no longer the agent but the listener. Something reaches him from outside the domain he has built. <em>From far</em>: the threat is not yet localised, not yet named. This is the hinge on which the poem's drama turns — and the place where the preface's interruption would fall.</p><p>Like the Ancient Mariner hearing the two voices above him, Kubla is receiving a signal that his enclosed world cannot contain. The poem cannot follow where this leads — and it doesn't.</p></div></div></div>
+
+<div class="lb porlock" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">30</span><div class="lright"><div class="ltrow"><span class="ltext">Ancestral voices prophesying war!</span><span class="lbadge">Porlock</span></div><div class="ann"><p>The only exclamation in the poem given to a statement rather than a sight. The voices are <em>ancestral</em> — from the past, from the dead, from before — and their prophecy is <em>war</em>: the destruction of everything the pleasure-dome represents. This is the poem's impossible continuation. What happens when Kubla heeds the voices? The poem never says. The person from Porlock arrived here.</p><p>The parallel with <em>The Rime of the Ancient Mariner</em> is structural: in both poems, a figure encounters a vision that exceeds the moral framework available to them. In the <em>Rime</em>, Coleridge resorts to marginal glosses to explain what the poem cannot. In <em>Kubla Khan</em>, the preface serves the same function — it explains the gap rather than filling it.</p></div></div></div>
+
+<div class="lb porlock" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">31</span><div class="lright"><div class="ltrow"><span class="ltext ind">The shadow of the dome of pleasure</span><span class="lbadge">Porlock</span></div><div class="ann"><p>The poem shifts to a shorter, more contemplative metre — as if slowing after the shock of the prophecy. The dome appears now as its own shadow, reflected on water. A reflection possesses nothing of what it depicts. The poem is already at a distance from its subject.</p></div></div></div>
+
+<div class="lb porlock" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">32</span><div class="lright"><div class="ltrow"><span class="ltext ind">Floated midway on the waves;</span><span class="lbadge">Porlock</span></div><div class="ann"><p><em>Midway</em> — not at the surface, not at the bottom, but suspended between. The dome's reflection occupies the threshold between the sunlit world above and the caverns below. The poem is suspending itself between what it has said and what it cannot say.</p></div></div></div>
+
+<div class="lb porlock" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">33</span><div class="lright"><div class="ltrow"><span class="ltext ind">Where was heard the mingled measure</span><span class="lbadge">Porlock</span></div><div class="ann"><p><em>Mingled measure</em> — the sound of the fountain above and the river below, blended. Two sources, two origins, heard together without being resolved into one. The poem is listening to itself from outside.</p></div></div></div>
+
+<div class="lb porlock" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">34</span><div class="lright"><div class="ltrow"><span class="ltext ind">From the fountain and the caves.</span><span class="lbadge">Porlock</span></div><div class="ann"><p>The fountain (eruption, creation, the chasm's force) and the caves (enclosure, depth, the measureless underground) — the poem's two poles. They are heard together here, in the reflection, at the moment of the poem's own self-contemplation.</p></div></div></div>
+
+<div class="lb porlock" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">35</span><div class="lright"><div class="ltrow"><span class="ltext">It was a miracle of rare device,</span><span class="lbadge">Porlock</span></div><div class="ann"><p>The poem steps back and names what it has been describing: a <em>miracle of rare device</em>. The word <em>device</em> — mechanism, contrivance, art — is significant. The pleasure-dome is not a natural wonder but a <em>made thing</em>. And so is the poem.</p></div></div></div>
+
+<div class="lb porlock" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">36</span><div class="lright"><div class="ltrow"><span class="ltext">A sunny pleasure dome with caves of ice!</span><span class="lbadge">Porlock</span></div><div class="ann"><p>The poem's exclamatory summary of itself: sun and ice, pleasure and cold, the paradox held in one line. The exclamation is the boundary between the first part of the poem (third-person, geographic, dreamed) and the second (first-person, reflexive, waking). After this line, the poem changes voice completely.</p></div></div></div>
+
+</div>
+
+<!-- STANZA III -->
+<div class="stanza-hdr"><div class="sh-inner"><span class="sh-num">III</span><span class="sh-label">The Vision and the Poet &middot; lines 37–54</span></div></div>
+<div class="poem-body" id="s3">
+
+<div class="lb waking" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">37</span><div class="lright"><div class="ltrow"><span class="ltext">A damsel with a dulcimer</span><span class="lbadge">Waking</span></div><div class="ann"><p><strong>The break.</strong> After thirty-six lines of third-person landscape, the poem shifts register entirely. A figure appears — a woman with a stringed instrument — introduced with the simplicity of a ballad. No exclamation, no geological violence. The metre shortens. We are in a different mode.</p></div></div></div>
+
+<div class="lb waking" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">38</span><div class="lright"><div class="ltrow"><span class="ltext">In a vision once I saw:</span><span class="lbadge">Waking</span></div><div class="ann"><p><em>I</em> — the first person in the poem. And the vision is remembered: <em>once I saw</em>. This is not the dream speaking; this is someone recalling a vision from outside it. The poet has entered his own poem as a witness to his own imagination. A meta-vision: a vision of a vision.</p></div></div></div>
+
+<div class="lb waking" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">39</span><div class="lright"><div class="ltrow"><span class="ltext">It was an Abyssinian maid,</span><span class="lbadge">Waking</span></div><div class="ann"><p><em>Abyssinian</em> — Ethiopia. Bruce's <em>Travels to Discover the Source of the Nile</em> (1790) is one of Lowes's key sources for the poem's geography. The maid comes from the same region of saturated reading as the river Alph. But here she is a figure in the poet's conscious memory, not the landscape of the dream.</p></div></div></div>
+
+<div class="lb waking" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">40</span><div class="lright"><div class="ltrow"><span class="ltext">And on her dulcimer she played,</span><span class="lbadge">Waking</span></div><div class="ann"><p>She plays — she produces music — and the poet hears it. The dulcimer is a stringed instrument struck with hammers, its sound sustained and resonant. Music as the analogue of poetic inspiration: something heard from outside oneself that the self then attempts to reproduce.</p></div></div></div>
+
+<div class="lb waking" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">41</span><div class="lright"><div class="ltrow"><span class="ltext">Singing of Mount Abora.</span><span class="lbadge">Waking</span></div><div class="ann"><p><em>Mount Abora</em> — unidentified in any single source, but almost certainly derived from Milton's <em>Paradise Lost</em> IV, where <em>Mount Amara</em> is the supposed site of earthly paradise. Significantly, in the Crewe manuscript — the earliest surviving draft of the poem — Coleridge had written <em>Amara</em> directly, before revising it to the more fluid, sonically mysterious <em>Abora</em>. This revision is one of the clearest traces of the <em>Waking</em> layer: a deliberate, conscious adjustment of sound and allusion. The maid sings of an unreachable paradise — which is also the desire for the two hundred and fifty missing lines.</p></div></div></div>
+
+<div class="lb waking" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">42</span><div class="lright"><div class="ltrow"><span class="ltext">Could I revive within me</span><span class="lbadge">Waking</span></div><div class="ann"><p><em>Could I</em> — the conditional. The poet no longer has what he once had. The vision was, it was heard, but it cannot be reliably reproduced. This is the waking mind speaking: it knows the difference between having the vision and having lost it. The dream speaks in the indicative; the waking poet speaks in the conditional.</p></div></div></div>
+
+<div class="lb waking" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">43</span><div class="lright"><div class="ltrow"><span class="ltext">Her symphony and song,</span><span class="lbadge">Waking</span></div><div class="ann"><p>The maid's music is named twice: <em>symphony</em> (instrumental) and <em>song</em> (vocal). The poet wants to revive both — the formal structure and the lyric impulse. What he is describing is the experience of trying to remember how to write the poem he has already written.</p></div></div></div>
+
+<div class="lb waking" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">44</span><div class="lright"><div class="ltrow"><span class="ltext">To such a deep delight 'twould win me,</span><span class="lbadge">Waking</span></div><div class="ann"><p>If he could revive the music, it would bring him to <em>deep delight</em> — a delight that is also dangerous, that leads somewhere. The word <em>win</em> is active: delight as conquest, as transformation.</p></div></div></div>
+
+<div class="lb waking" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">45</span><div class="lright"><div class="ltrow"><span class="ltext">That with music loud and long,</span><span class="lbadge">Waking</span></div><div class="ann"><p>The conditional unfolds: the maid's music → deep delight → <em>music loud and long</em> that the poet would produce. He is imagining himself as the instrument now, not the listener. The transformation from audience to maker is the waking poet's fantasy.</p></div></div></div>
+
+<div class="lb waking" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">46</span><div class="lright"><div class="ltrow"><span class="ltext">I would build that dome in air,</span><span class="lbadge">Waking</span></div><div class="ann"><p><em>Build that dome in air</em> — the poem shifts from recording a vision to claiming the power to reproduce it. <em>In air</em>: not in stone, not in Xanadu — but in the medium of music and poetry. The poet would re-create Kubla Khan's decree, but through art rather than sovereignty.</p></div></div></div>
+
+<div class="lb waking" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">47</span><div class="lright"><div class="ltrow"><span class="ltext">That sunny dome! those caves of ice!</span><span class="lbadge">Waking</span></div><div class="ann"><p>The poem's two defining images — sun and ice — return as exclamations, pure desire. Not description but invocation. The waking poet is performing his own longing for the dream he claims to have lost.</p></div></div></div>
+
+<div class="lb waking" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">48</span><div class="lright"><div class="ltrow"><span class="ltext">And all who heard should see them there,</span><span class="lbadge">Waking</span></div><div class="ann"><p>The poem imagines its own audience: listeners who would be transformed by the music into <em>seers</em>. The auditory becomes visual. This is the Romantic theory of imagination as a faculty that makes the invisible visible — but here it is the poet who would produce this effect in others, not receive it himself.</p></div></div></div>
+
+<div class="lb waking" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">49</span><div class="lright"><div class="ltrow"><span class="ltext">And all should cry, Beware! Beware!</span><span class="lbadge">Waking</span></div><div class="ann"><p><strong>The warning.</strong> The listeners, transformed, would cry <em>Beware!</em> The poet-figure is now dangerous — not a harmless dreamer but something that requires circumspection, ritual protection. The incantatory repetition is constructed, rhetorical — it has the quality of performance rather than vision.</p></div></div></div>
+
+<div class="lb waking" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">50</span><div class="lright"><div class="ltrow"><span class="ltext">His flashing eyes, his floating hair!</span><span class="lbadge">Waking</span></div><div class="ann"><p>The poet is described in the third person — as if seen from outside. <em>His flashing eyes, his floating hair</em>: the iconic image of the Romantic poet as possessed figure, visionary, quasi-divine. Coleridge is constructing a mythology of the inspired creator — a role, a costume. The waking mind is very much at work here.</p></div></div></div>
+
+<div class="lb waking" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">51</span><div class="lright"><div class="ltrow"><span class="ltext">Weave a circle round him thrice,</span><span class="lbadge">Waking</span></div><div class="ann"><p>Protective ritual — the circle woven three times to contain the dangerous figure. The imagery is folkloric, quasi-magical. It is also theatrical: the inspired poet must be separated from ordinary people by ceremony. This is not a vision but a staging.</p></div></div></div>
+
+<div class="lb waking" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">52</span><div class="lright"><div class="ltrow"><span class="ltext">And close your eyes with holy dread,</span><span class="lbadge">Waking</span></div><div class="ann"><p><em>Holy dread</em> — the paradox of the sacred returns from line 14 (<em>as holy and enchanted</em>). What was the quality of a landscape is now the quality of the poet himself. The poem has transferred the attributes of the sublime geography onto its own creator.</p></div></div></div>
+
+<div class="lb waking" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">53</span><div class="lright"><div class="ltrow"><span class="ltext">For he on honey-dew hath fed,</span><span class="lbadge">Waking</span></div><div class="ann"><p><em>Honey-dew</em> — food of the gods, the substance of visions. The poet is sustained not by ordinary food but by the diet of the inspired. This is the mythology of the creator as a being apart. The preface performs the same function: Coleridge was sustained by laudanum, by the dream, by something that could not be chosen or repeated.</p></div></div></div>
+
+<div class="lb waking" role="button" tabindex="0" onclick="tog(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(this)}"><span class="lnum">54</span><div class="lright"><div class="ltrow"><span class="ltext">And drunk the milk of Paradise.</span><span class="lbadge">Waking</span></div><div class="ann"><p><strong>The final line.</strong> <em>The milk of Paradise</em> — not water, not wine, but milk: primal, sustaining, from the source. Paradise as a place one can drink from — and <em>have</em> drunk from, in the perfect tense. The poem ends in the past: <em>hath fed</em>, <em>drunk</em>. The vision is over. The last word of the poem is <em>Paradise</em> — and the poem is the evidence that it was reached, once, and cannot be reached again.</p></div></div></div>
+
+</div>
+
+<div class="struct-note">
+  <p><strong>On the three-layer reading:</strong> These attributions are analytical propositions, not facts. The boundary between DREAM and PORLOCK (at lines 29–30) and between PORLOCK and WAKING (at line 37) cannot be proven — they are the places where the poem's internal evidence, Coleridge's preface, and a century of scholarship converge on a question rather than an answer. The annotation at each pivot reflects the interpretive argument developed in the article. See FIG–02 · <em>The Poem That Wrote Its Own Absence</em> (Urwork Substack) for the full reasoning.</p>
+</div>
+
+<div class="closing">
+  <p>Text: Samuel Taylor Coleridge, <em>Kubla Khan: or A Vision in a Dream. A Fragment</em> (first published 1816, John Murray; composed c. October 1797). Sources for annotation: John Livingston Lowes, <em>The Road to Xanadu: A Study in the Ways of the Imagination</em> (Houghton Mifflin, 1927); Elisabeth Schneider, <em>Coleridge, Opium and "Kubla Khan"</em> (University of Chicago Press, 1953); Pascal Aquien, preface to <em>Le Dit du Vieux Marin, suivi de Christabel et de Kubla-Khan</em>, trad. Henri Parisot (José Corti, 1988, p. 19). Part of Urwork FIG–02 &middot; urwork.substack.com &middot; urwork-encyclopedia.github.io</p>
+</div>
+
+<footer class="ft">
+  <div class="fl">Ur<em>work</em></div>
+  <div class="fr">Encyclopedia of the Creative Process<br>urwork.substack.com &middot; urwork-encyclopedia.github.io</div>
+</footer>
+
+<script>
+function tog(el){
+  const open=el.classList.contains('open');
+  document.querySelectorAll('.lb.open').forEach(b=>b.classList.remove('open'));
+  if(!open)el.classList.add('open');
+}
+function setFilter(f){
+  const b=document.body;
+  b.classList.remove('f-dream','f-porlock','f-waking');
+  document.querySelectorAll('.cbtn').forEach(x=>{
+    x.classList.remove('on');
+    x.setAttribute('aria-pressed','false');
+  });
+  const activeId = f==='all' ? 'btn-all' : 'btn-'+f;
+  const activeBtn = document.getElementById(activeId);
+  if(f!=='all') b.classList.add('f-'+f);
+  if(activeBtn){ activeBtn.classList.add('on'); activeBtn.setAttribute('aria-pressed','true'); }
+}
+</script>
+</body>
+</html>
