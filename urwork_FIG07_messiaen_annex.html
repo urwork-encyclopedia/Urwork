@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urwork — FIG–07 · Messiaen · Seven Layers</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0c0a07;--bg2:#141210;--bg3:#1c1a16;--bg4:#221f1a;
+  --bone:#f0ebe3;--bone2:rgba(240,235,227,0.82);--bone3:rgba(240,235,227,0.52);--bone4:rgba(240,235,227,0.22);--bone5:rgba(240,235,227,0.1);
+  --accent:#c0392b;--ab:#f07868;--gold:#c8943a;--gold-bg:rgba(200,148,58,0.12);
+  /* Layer colours — seven distinct */
+  --l1:#7ab0c8;--l1bg:rgba(90,143,168,0.12);
+  --l2:#a8c872;--l2bg:rgba(143,174,90,0.12);
+  --l3:#cc9878;--l3bg:rgba(174,122,90,0.12);
+  --l4:#aa7ecc;--l4bg:rgba(138,90,174,0.12);
+  --l5:#cc7896;--l5bg:rgba(174,90,122,0.12);
+  --l6:#7acaaa;--l6bg:rgba(90,174,143,0.12);
+  --l7:#c8943a;--l7bg:rgba(200,148,58,0.12);
+  --cormorant:'Cormorant Garamond',serif;
+  --sans:'DM Sans',sans-serif;
+}
+html{background:var(--bg);color:var(--bone);font-family:var(--sans);font-weight:300;-webkit-font-smoothing:antialiased}
+body{max-width:100%;margin:0}
+
+/* HEADER */
+.hdr{padding:1.75rem 4rem 1.5rem;border-bottom:.5px solid var(--bone5);display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:var(--cormorant);font-size:1.3rem;font-weight:300;letter-spacing:-.02em}
+.logo em{font-style:italic;color:var(--ab)}
+.ref{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--bone3)}
+.ref b{color:var(--ab)}
+
+/* TITLE */
+.ttl{padding:3rem 4rem 2rem;text-align:center;position:relative}
+.eyebrow{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--ab);margin-bottom:1rem;opacity:0;animation:fu .7s .1s ease forwards}
+.ttl h1{font-family:var(--cormorant);font-size:clamp(2rem,5vw,3.4rem);font-weight:300;line-height:1.1;letter-spacing:-.02em;color:var(--bone);margin-bottom:.5rem;opacity:0;animation:fu .7s .3s ease forwards}
+.ttl h1 em{font-style:italic;color:rgba(240,235,227,0.65)}
+.tsub{font-family:var(--cormorant);font-style:italic;font-size:1rem;color:var(--bone3);margin-bottom:.4rem;opacity:0;animation:fu .7s .5s ease forwards}
+.tinfo{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(240,235,227,0.55);opacity:0;animation:fu .7s .7s ease forwards}
+@keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* INTRO */
+.intro{max-width:820px;margin:0 auto;padding:0 4rem 2.5rem}
+.intro p{font-size:.88rem;line-height:1.9;color:var(--bone2);margin-bottom:.75rem}
+
+/* LAYER NAV */
+.layer-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:.5px solid var(--bone5);padding:.85rem 4rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;overflow-x:auto}
+.ln-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone3);margin-right:.25rem;flex-shrink:0}
+.ln-btn{display:inline-flex;align-items:center;gap:.4rem;padding:4px 11px;border-radius:2px;font-size:.76rem;cursor:pointer;border:.5px solid;background:transparent;font-family:var(--sans);font-weight:300;letter-spacing:.04em;transition:color .18s,border-color .18s,background .18s;flex-shrink:0;color:var(--bone3)}
+.ln-btn:hover,.ln-btn.on{color:var(--bone)}
+.ln-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+
+.ln-btn[data-l="1"]{border-color:rgba(90,143,168,0.4)}.ln-btn[data-l="1"]:hover,.ln-btn[data-l="1"].on{background:var(--l1bg);border-color:var(--l1);color:var(--l1)}.ln-dot[data-l="1"]{background:var(--l1)}
+.ln-btn[data-l="2"]{border-color:rgba(143,174,90,0.4)}.ln-btn[data-l="2"]:hover,.ln-btn[data-l="2"].on{background:var(--l2bg);border-color:var(--l2);color:var(--l2)}.ln-dot[data-l="2"]{background:var(--l2)}
+.ln-btn[data-l="3"]{border-color:rgba(174,122,90,0.4)}.ln-btn[data-l="3"]:hover,.ln-btn[data-l="3"].on{background:var(--l3bg);border-color:var(--l3);color:var(--l3)}.ln-dot[data-l="3"]{background:var(--l3)}
+.ln-btn[data-l="4"]{border-color:rgba(138,90,174,0.4)}.ln-btn[data-l="4"]:hover,.ln-btn[data-l="4"].on{background:var(--l4bg);border-color:var(--l4);color:var(--l4)}.ln-dot[data-l="4"]{background:var(--l4)}
+.ln-btn[data-l="5"]{border-color:rgba(174,90,122,0.4)}.ln-btn[data-l="5"]:hover,.ln-btn[data-l="5"].on{background:var(--l5bg);border-color:var(--l5);color:var(--l5)}.ln-dot[data-l="5"]{background:var(--l5)}
+.ln-btn[data-l="6"]{border-color:rgba(90,174,143,0.4)}.ln-btn[data-l="6"]:hover,.ln-btn[data-l="6"].on{background:var(--l6bg);border-color:var(--l6);color:var(--l6)}.ln-dot[data-l="6"]{background:var(--l6)}
+.ln-btn[data-l="7"]{border-color:rgba(200,148,58,0.4)}.ln-btn[data-l="7"]:hover,.ln-btn[data-l="7"].on{background:var(--l7bg);border-color:var(--l7);color:var(--l7)}.ln-dot[data-l="7"]{background:var(--l7)}
+
+/* LAYER BLOCKS */
+.layers{max-width:820px;margin:0 auto;padding:1rem 4rem 4rem}
+
+.layer{border-radius:4px;margin-bottom:.75rem;border:.5px solid var(--bone5);overflow:hidden;transition:opacity .25s}
+.layer.dimmed{opacity:.45}
+
+.layer-head{display:flex;align-items:center;gap:1rem;padding:1.1rem 1.5rem;cursor:pointer;transition:background .15s;position:relative}
+.layer-head:hover{background:rgba(240,235,227,0.04)}
+.layer.open .layer-head{background:rgba(240,235,227,0.05)}
+
+.lh-num{font-family:var(--cormorant);font-size:2rem;font-weight:300;font-style:italic;line-height:1;width:2rem;text-align:center;flex-shrink:0}
+.lh-stripe{width:3px;border-radius:2px;align-self:stretch;flex-shrink:0;min-height:32px}
+.lh-body{flex:1}
+.lh-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.2rem}
+.lh-title{font-family:var(--cormorant);font-size:1.25rem;font-weight:300;color:var(--bone)}
+.lh-title em{font-style:italic}
+.lh-arrow{font-size:.7rem;color:var(--bone3);margin-left:auto;flex-shrink:0;transition:transform .2s}
+.layer.open .lh-arrow{transform:rotate(180deg)}
+
+/* Colour theming per layer */
+.layer[data-l="1"] .lh-num{color:var(--l1)}.layer[data-l="1"] .lh-stripe{background:var(--l1)}.layer[data-l="1"] .lh-label{color:var(--l1)}
+.layer[data-l="2"] .lh-num{color:var(--l2)}.layer[data-l="2"] .lh-stripe{background:var(--l2)}.layer[data-l="2"] .lh-label{color:var(--l2)}
+.layer[data-l="3"] .lh-num{color:var(--l3)}.layer[data-l="3"] .lh-stripe{background:var(--l3)}.layer[data-l="3"] .lh-label{color:var(--l3)}
+.layer[data-l="4"] .lh-num{color:var(--l4)}.layer[data-l="4"] .lh-stripe{background:var(--l4)}.layer[data-l="4"] .lh-label{color:var(--l4)}
+.layer[data-l="5"] .lh-num{color:var(--l5)}.layer[data-l="5"] .lh-stripe{background:var(--l5)}.layer[data-l="5"] .lh-label{color:var(--l5)}
+.layer[data-l="6"] .lh-num{color:var(--l6)}.layer[data-l="6"] .lh-stripe{background:var(--l6)}.layer[data-l="6"] .lh-label{color:var(--l6)}
+.layer[data-l="7"] .lh-num{color:var(--l7)}.layer[data-l="7"] .lh-stripe{background:var(--l7)}.layer[data-l="7"] .lh-label{color:var(--l7)}
+
+/* LAYER CONTENT */
+.layer-body{display:none;padding:0 1.5rem 1.5rem 4.5rem;border-top:.5px solid var(--bone5)}
+.layer.open .layer-body{display:block}
+
+.lb-section{margin-top:1.25rem}
+.lb-section-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone3);margin-bottom:.6rem;display:flex;align-items:center;gap:.6rem}
+.lb-section-label::after{content:'';flex:1;height:.5px;background:var(--bone5)}
+.lb-text{font-size:.84rem;line-height:1.88;color:var(--bone2);margin-bottom:.75rem}
+.lb-text em{font-style:italic}
+.lb-text strong{font-weight:500;color:var(--bone)}
+
+.lb-detail{background:var(--bg3);border-radius:3px;padding:1rem 1.25rem;margin:.75rem 0;font-size:.8rem;line-height:1.8;color:var(--bone3)}
+.lb-detail strong{color:var(--bone2);font-weight:500}
+
+.lb-listen{display:flex;align-items:flex-start;gap:.75rem;background:var(--bg4);border:.5px solid var(--bone5);border-radius:3px;padding:.85rem 1rem;margin-top:1rem}
+.lb-listen-icon{font-size:.9rem;color:var(--ab);flex-shrink:0;margin-top:.1rem}
+.lb-listen-label{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--bone3);margin-bottom:.2rem}
+.lb-listen-text{font-size:.78rem;color:var(--bone3);line-height:1.6}
+
+.lb-question{border-left:2px solid var(--bone5);padding:.75rem 1rem;margin-top:1.25rem;font-family:var(--cormorant);font-style:italic;font-size:1rem;color:var(--bone3);line-height:1.65}
+
+/* CLOSING NOTE */
+.closing{max-width:820px;margin:0 auto;padding:2rem 4rem 3.5rem;border-top:.5px solid var(--bone5)}
+.closing p{font-size:.76rem;color:rgba(240,235,227,0.52);line-height:1.8}
+
+/* FOOTER */
+.ft{border-top:.5px solid var(--bone5);padding:1.25rem 4rem;display:flex;justify-content:space-between;align-items:center}
+.fl{font-family:var(--cormorant);font-size:1.1rem;font-weight:300}
+.fl em{font-style:italic;color:var(--ab)}
+.fr{font-size:.7rem;color:rgba(240,235,227,0.52);text-align:right;line-height:1.6}
+
+@media(max-width:680px){
+  .hdr,.ttl,.intro,.layer-nav,.layers,.closing,.ft{padding-left:1.25rem;padding-right:1.25rem}
+  .layer-body{padding-left:1.5rem}
+  .ttl h1{font-size:clamp(1.8rem,8vw,3rem)}
+  .layer-nav{gap:.35rem;padding-top:.6rem;padding-bottom:.6rem}
+  .ln-btn{padding:3px 8px;font-size:.72rem}
+  .ln-label{display:none}
+  .layer-head{min-height:44px}
+  .ft{flex-direction:column;gap:.35rem;text-align:center}
+  .fr{text-align:center}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="logo">Ur<em>work</em></div>
+  <div class="ref">Interactive annex &middot; <b>FIG&ndash;07</b> &middot; Messiaen &middot; Chronochromie</div>
+</header>
+
+<main>
+<div class="ttl">
+  <div class="eyebrow">Seven layers of the compositional process &middot; Interactive annex &middot; FIG&ndash;07</div>
+  <h1>Chronochromie<br><em>in Seven Layers</em></h1>
+  <p class="tsub">How Olivier Messiaen made a work — from field notebook to première &mdash; 1959&ndash;1960</p>
+  <p class="tinfo">Olivier Messiaen &middot; Completed 1960 &middot; Première: Donaueschingen, 16 October 1960 &middot; Cond. Hans Rosbaud</p>
+</div>
+
+<div class="intro">
+  <p>A finished composition conceals the process that made it. <em>Chronochromie</em> is unusual in that Messiaen's own writings — the <em>Traité de rythme, de couleur et d'ornithologie</em> (7 vols., Leduc, 1994–2002) and the testimony of those who knew his working methods — allow us to reconstruct the compositional process with some precision. What follows is not an analysis of the work but a map of how it was made.</p>
+  <p>Each layer was necessary. None was sufficient alone. Click any layer to open it. The seven layers are cumulative: each one was deposited on top of the previous, and the work only became itself when all seven were present.</p>
+</div>
+
+<nav class="layer-nav" id="nav">
+  <span class="ln-label">Layers</span>
+  <button class="ln-btn" data-l="1" onclick="tog(1, true)"><span class="ln-dot" data-l="1"></span>Observation</button>
+  <button class="ln-btn" data-l="2" onclick="tog(2, true)"><span class="ln-dot" data-l="2"></span>Transcription</button>
+  <button class="ln-btn" data-l="3" onclick="tog(3, true)"><span class="ln-dot" data-l="3"></span>Selection</button>
+  <button class="ln-btn" data-l="4" onclick="tog(4, true)"><span class="ln-dot" data-l="4"></span>Modal treatment</button>
+  <button class="ln-btn" data-l="5" onclick="tog(5, true)"><span class="ln-dot" data-l="5"></span>Coloration</button>
+  <button class="ln-btn" data-l="6" onclick="tog(6, true)"><span class="ln-dot" data-l="6"></span>Temporal organisation</button>
+  <button class="ln-btn" data-l="7" onclick="tog(7, true)"><span class="ln-dot" data-l="7"></span>Naming</button>
+</nav>
+
+<div class="layers" id="layers">
+
+  <!-- LAYER 1 — OBSERVATION -->
+  <div class="layer" data-l="1" id="layer-1">
+    <div class="layer-head" role="button" tabindex="0" aria-expanded="false" onclick="tog(1)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(1)}">
+      <div class="lh-num">I</div>
+      <div class="lh-stripe"></div>
+      <div class="lh-body">
+        <div class="lh-label">Layer 1 &middot; The field</div>
+        <div class="lh-title">Observation — <em>the notebook before the score</em></div>
+      </div>
+      <div class="lh-arrow">▼</div>
+    </div>
+    <div class="layer-body">
+      <div class="lb-section">
+        <div class="lb-section-label">What happened in the field</div>
+        <p class="lb-text">Composition for Messiaen began not at a desk but outdoors, before dawn, in specific landscapes chosen for the density and diversity of their bird populations. For <em>Chronochromie</em>, the field work was conducted across multiple seasons and locations: the forest of La Braconne in the Charente, the garrigue near La Palme in the Aude, the coastline of the Morbihan in Brittany, and the mountain torrents of the French Alps — specifically the Gorges de la Bourne in the Vercors — notated as precisely as the birds. The Swedish, Japanese, and Mexican material was gathered on separate trips.</p>
+        <p class="lb-text">Messiaen would arrive at the observation site before first light, sit still, and wait. What he heard he wrote down immediately, in a personal notation system he had developed over decades. He did not record with a microphone — this was a point of principle. The notation had to be made in real time, by hand, in the moment of hearing. The act of listening was also the act of writing.</p>
+        <div class="lb-detail">
+          <strong>The field notebook as primary document.</strong> Messiaen's ornithological notebooks are held in the Bibliothèque nationale de France. They contain thousands of pages of handwritten birdsong transcriptions accumulated over four decades, organised by species, location, and date. For <em>Chronochromie</em>, the relevant notebooks date primarily from 1959–1960.
+        </div>
+      </div>
+      <div class="lb-section">
+        <div class="lb-section-label">Why this matters for the work</div>
+        <p class="lb-text">The discipline of observation imposed a constraint that shaped everything that followed: <em>the material was not invented</em>. Messiaen could select from what he had heard; he could not add to it. The field was the primary source, and the field was not under his control. This constraint is the foundation of the entire compositional method.</p>
+        <div class="lb-question">What does it mean to compose from observation rather than invention — and where does the composer's agency begin?</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER 2 — TRANSCRIPTION -->
+  <div class="layer" data-l="2" id="layer-2">
+    <div class="layer-head" role="button" tabindex="0" aria-expanded="false" onclick="tog(2)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(2)}">
+      <div class="lh-num">II</div>
+      <div class="lh-stripe"></div>
+      <div class="lh-body">
+        <div class="lh-label">Layer 2 &middot; The notebook</div>
+        <div class="lh-title">Transcription — <em>what standard notation cannot hold</em></div>
+      </div>
+      <div class="lh-arrow">▼</div>
+    </div>
+    <div class="layer-body">
+      <div class="lb-section">
+        <div class="lb-section-label">The problem of notation</div>
+        <p class="lb-text">A bird does not sing in equal temperament. It does not organise its phrases into bars or beats. Its microtonal inflections fall between the semitones of the piano keyboard; its rhythm is a sequence of durations that resist reduction to a common unit. Standard Western notation — developed to encode music organised around these very conventions — is not equipped to capture what a bird does.</p>
+        <p class="lb-text">Messiaen's solution was to develop, over decades, a personal notational system capable of approximating the acoustic reality of birdsong. He used conventional note-heads but placed them in relations of duration and pitch that departed from standard notation: approximate microtones were indicated by directional markings, rhythms were notated as sequences of proportional durations rather than as subdivisions of a regular beat. The result was a notation that was legible to a trained musician but that encoded information standard notation would have suppressed.</p>
+        <div class="lb-detail">
+          <strong>The paradox of faithful transcription.</strong> Every transcription involves loss. Messiaen knew that his notation was an approximation — the bird's actual pitch could not be exactly captured in any fixed-pitch notation. What he preserved was what he judged most compositionally significant: the relative pitch contour, the rhythmic shape, the characteristic intervals of each species. The transcription was already an interpretation.
+        </div>
+      </div>
+      <div class="lb-section">
+        <div class="lb-section-label">The composer's hand in the copy</div>
+        <p class="lb-text">Transcription is the first moment at which Messiaen's own perceptual and compositional intelligence enters the material. Two ornithologists hearing the same bird would produce different transcriptions. Messiaen heard through his synesthetic perception — the pitches he wrote down were the pitches he heard, but what he heard was already coloured by the harmonic language he had developed and by the visual experience his hearing produced. The transcription was faithful to the bird; it was also unmistakably Messiaen.</p>
+        <div class="lb-question">At what point in the act of transcription does documentation become composition?</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER 3 — SELECTION -->
+  <div class="layer" data-l="3" id="layer-3">
+    <div class="layer-head" role="button" tabindex="0" aria-expanded="false" onclick="tog(3)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(3)}">
+      <div class="lh-num">III</div>
+      <div class="lh-stripe"></div>
+      <div class="lh-body">
+        <div class="lh-label">Layer 3 &middot; The archive</div>
+        <div class="lh-title">Selection — <em>which birds, for which movement</em></div>
+      </div>
+      <div class="lh-arrow">▼</div>
+    </div>
+    <div class="layer-body">
+      <div class="lb-section">
+        <div class="lb-section-label">The problem of abundance</div>
+        <p class="lb-text">By 1959 Messiaen had accumulated notebooks containing the transcribed songs of hundreds of species from multiple continents. <em>Chronochromie</em> required selection — not just of which species to include, but of which songs, at what pitch level, in which movement, in relationship with which other songs. This was curatorial work: the work of an editor as much as a composer.</p>
+        <p class="lb-text">The structural demands of the work shaped the selection. The Strophes and Antistrophes required material from multiple regions — birdsong from France, Sweden, Japan and Mexico — because the work's argument about colour and time needed contrasting timbral characters. The Épode required a different kind of selection: eighteen species whose songs could coexist simultaneously without any single voice dominating the texture. For the Épode, Messiaen chose exclusively from his French notebooks — specifically from the Charente and the Aude — selecting species with contrasting rhythmic profiles and pitch ranges so that each of the eighteen voices would remain individually audible within the polyphony.</p>
+        <div class="lb-detail">
+          <strong>The Épode's eighteen voices.</strong> The selection of eighteen specific French species for simultaneous performance was a compositional decision of high precision. Each bird needed a characteristic rhythmic signature different enough from its neighbours to remain perceptible; each needed a pitch range that did not entirely overlap with the others. This was not assembly but architecture — the organisation of independent voices into a texture that is chaotic in effect but carefully ordered in construction. Crucially, Messiaen assigned these eighteen birdsongs to <strong>18 solo string instruments</strong> rather than to the woodwind he normally used for birdsong — a deliberate choice that produces the microtonal friction and dense polyphonic texture characteristic of the movement.
+        </div>
+      </div>
+      <div class="lb-section">
+        <div class="lb-section-label">What selection excludes</div>
+        <p class="lb-text">Selection is also omission. The thousands of pages of notebooks not drawn upon for <em>Chronochromie</em> remained available for future works — and were used in subsequent compositions. Messiaen's archive was a resource he drew on across his entire career; no single work exhausted it. The act of selection was therefore also an act of conservation: what was not chosen here might be chosen later.</p>
+        <div class="lb-question">Does the selection of found material constitute authorship — or curation? And is the distinction meaningful?</div>
+      </div>
+      <div class="lb-listen">
+        <div class="lb-listen-icon">▶</div>
+        <div>
+          <div class="lb-listen-label">Listen — the Épode (mouvement VI)</div>
+          <div class="lb-listen-text"><a href="https://www.youtube.com/watch?v=7sVQj-MBgig&amp;t=1104" target="_blank" style="color:var(--ab);text-decoration:none;border-bottom:.5px solid rgba(224,90,77,0.6)">Dorati / BBC Symphony Orchestra (1964) → 18:24</a> — the reference recording. Listen for the moment when eighteen individual voices become a single texture: the point at which selection produces emergence.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER 4 — MODAL TREATMENT -->
+  <div class="layer" data-l="4" id="layer-4">
+    <div class="layer-head" role="button" tabindex="0" aria-expanded="false" onclick="tog(4)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(4)}">
+      <div class="lh-num">IV</div>
+      <div class="lh-stripe"></div>
+      <div class="lh-body">
+        <div class="lh-label">Layer 4 &middot; The harmonic language</div>
+        <div class="lh-title">Modal treatment — <em>from field pitch to harmonic colour</em></div>
+      </div>
+      <div class="lh-arrow">▼</div>
+    </div>
+    <div class="layer-body">
+      <div class="lb-section">
+        <div class="lb-section-label">The modes à transpositions limitées</div>
+        <p class="lb-text">The birdsong as transcribed from the field existed in approximate pitches — the closest equivalents, within a fixed-pitch notation system, to what Messiaen had heard. Before these pitches could enter the orchestral work, they passed through Messiaen's harmonic language: the <em>modes à transpositions limitées</em>, a set of scales he had developed from the late 1920s onward and codified in <em>Technique de mon langage musical</em> (Leduc, 1944).</p>
+        <p class="lb-text">These modes are unusual in that they cannot be transposed through all twelve semitones without returning to their original pitch-class content before completing the cycle. A mode that can only be transposed twice before returning to its starting point is, in Messiaen's terminology, a mode of limited transposition. The system generates a harmonic vocabulary of distinctive sonorities — characterised by symmetry, by the presence of tritones, and by the avoidance of the dominant-tonic relationships of functional tonality.</p>
+        <div class="lb-detail">
+          <strong>Modal treatment of birdsong.</strong> When a transcribed bird melody entered the compositional process, its pitches were adjusted — sometimes slightly, sometimes substantially — to bring them into alignment with the modal language. This was not a distortion of the ornithological material: it was a translation, a process of making the material speakable within the harmonic world of the work. The bird remained recognisable; it also became Messiaen.
+        </div>
+      </div>
+      <div class="lb-section">
+        <div class="lb-section-label">See also</div>
+        <p class="lb-text">For the full analysis of the modes à transpositions limitées and their relationship to Messiaen's synesthetic experience, see TR–05 · Synesthesia as Tool in the Urwork encyclopedia.</p>
+        <div class="lb-question">The modal system was developed before the ornithological method. Did it shape what Messiaen heard in the field — or only what he did with it afterwards?</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER 5 — COLORATION -->
+  <div class="layer" data-l="5" id="layer-5">
+    <div class="layer-head" role="button" tabindex="0" aria-expanded="false" onclick="tog(5)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(5)}">
+      <div class="lh-num">V</div>
+      <div class="lh-stripe"></div>
+      <div class="lh-body">
+        <div class="lh-label">Layer 5 &middot; The visual dimension</div>
+        <div class="lh-title">Coloration — <em>what Messiaen saw when he heard</em></div>
+      </div>
+      <div class="lh-arrow">▼</div>
+    </div>
+    <div class="layer-body">
+      <div class="lb-section">
+        <div class="lb-section-label">The synesthetic perception</div>
+        <p class="lb-text">Messiaen had a form of synesthesia — or, more precisely, a form of auditory-visual association so consistent and systematic that he treated it as a compositional tool. When he heard or imagined specific chords, he experienced specific colours or colour combinations. This was not a metaphor or a programme note: it was a perceptual reality that he described in detail in the <em>Traité</em> and that his students confirmed from observing him at the keyboard.</p>
+        <p class="lb-text">Each of the modes à transpositions limitées was associated with characteristic colour combinations. Mode 2 (the octatonic scale) produced, in his perception, a palette of violet, purple, red, and blue — the "stained-glass window" colours he associated with the great medieval cathedrals, and particularly with Chartres. Mode 3 produced orange, gold, and red-orange. Mode 6 produced grey, mauve, and the colour of rotating steel. The colour was not added to the harmony — it was the harmony, perceived through a different sensory channel.</p>
+        <div class="lb-detail">
+          <strong>Colour chords in Chronochromie.</strong> In the Strophes and Antistrophes, Messiaen deploys three types of what he called "colour chords" — dense harmonic aggregates whose function is not to create tension and resolution in the tonal sense, but to sustain specific colour fields over time. The orchestration reinforces the colour: he assigns instruments not only for their pitch range but for their timbral colour, seeking combinations that produce what he described as "windows" of light.
+        </div>
+      </div>
+      <div class="lb-section">
+        <div class="lb-section-label">Colour as structure</div>
+        <p class="lb-text">In <em>Chronochromie</em>, colour is not ornamental. It is structural: the title names it as the work's central subject. The colour of time is not a metaphor for the emotional quality of duration — it is a description of what Messiaen perceived when he heard the rhythmic structures he had constructed. The permutations of duration produced specific harmonic combinations; those combinations produced specific colours; the work was, for its composer, a sequence of colour events as much as a sequence of sonic events. See TC–07 · The Body in the Work for the analysis of the creator's sensory experience as compositional material.</p>
+        <div class="lb-question">If the colour was private — accessible only to Messiaen — can it be a structural element of the work, or only of its composition?</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER 6 — TEMPORAL ORGANISATION -->
+  <div class="layer" data-l="6" id="layer-6">
+    <div class="layer-head" role="button" tabindex="0" aria-expanded="false" onclick="tog(6)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(6)}">
+      <div class="lh-num">VI</div>
+      <div class="lh-stripe"></div>
+      <div class="lh-body">
+        <div class="lh-label">Layer 6 &middot; The rhythmic architecture</div>
+        <div class="lh-title">Temporal organisation — <em>the time that does not repeat</em></div>
+      </div>
+      <div class="lh-arrow">▼</div>
+    </div>
+    <div class="layer-body">
+      <div class="lb-section">
+        <div class="lb-section-label">Sources of the rhythmic system</div>
+        <p class="lb-text">The organisation of duration in <em>Chronochromie</em> draws on two external sources and one internal principle. The external sources are ancient Greek metrics — the quantitative verse of Pindar, in which syllables are long or short by inherent quantity rather than stress — and the 120 <em>deçî-tâlas</em> catalogued by Sharngadeva in the <em>Sangîtaratnâkara</em> (13th century, Sanskrit), which Messiaen had studied through Joanny Grosset's commentary in the <em>Encyclopédie de la musique</em> (1921). Both systems share a fundamental property: duration is primary, and pulse is either absent or derived.</p>
+        <p class="lb-text">The internal principle is the <em>rythme non-rétrogradable</em> — the non-retrogradable rhythm, a palindromic rhythmic cell that reads identically forwards and backwards. Such a rhythm cannot be reversed because it already contains its own reversal. Messiaen associated this with the theological concept of eternity: a duration with no before and after, only presence.</p>
+        <div class="lb-detail">
+          <strong>The symmetrical permutation scheme.</strong> The Strophes and Antistrophes of <em>Chronochromie</em> are organised by a symmetrical permutation scheme operating on a chromatic scale of 32 durations. The process — which Messiaen named <em>permutations symétriques</em> — reads the series from its centre outwards in a helical order, generating successive reorderings. Applied to the 32 chromatic durations (from the shortest triple quaver up to the value of 32 triple quavers), this process yields exactly <strong>36 distinct permutations</strong> before the series closes on itself. Not all 36 are used; but the mathematical structure determines which reorderings are available. The result is a rhythmic surface of extreme complexity governed by strict internal logic — which the ear cannot consciously follow, and is not intended to.
+        </div>
+      </div>
+      <div class="lb-section">
+        <div class="lb-section-label">What the listener hears</div>
+        <p class="lb-text">The permutation scheme is not intended to be consciously perceived. It organises duration at a level of complexity that exceeds the tracking capacity of conscious attention. What the listener hears is not the algorithm but its result: a rhythmic texture that is dense, asymmetrical, and resistant to the kind of metrical inference that governs most Western music. The effect is of time that does not accumulate toward a resolution — time that simply is, in the present, without direction.</p>
+        <div class="lb-listen">
+          <div class="lb-listen-icon">▶</div>
+          <div>
+            <div class="lb-listen-label">Listen — Strophe I</div>
+            <div class="lb-listen-text"><a href="https://www.youtube.com/watch?v=7sVQj-MBgig&amp;t=201" target="_blank" style="color:var(--ab);text-decoration:none;border-bottom:.5px solid rgba(224,90,77,0.6)">Dorati / BBC SO → 3:21</a> — attend to the absence of a regular pulse. Also: <a href="https://www.youtube.com/watch?v=_0b7mpiz-xc" target="_blank" style="color:var(--ab);text-decoration:none;border-bottom:.5px solid rgba(224,90,77,0.6)">Rickenbacher / BR-Symphonieorchester →</a></div>
+          </div>
+        </div>
+        <div class="lb-question">If a structural principle is imperceptible, does it act on the listener — or only on the composer?</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER 7 — NAMING -->
+  <div class="layer" data-l="7" id="layer-7">
+    <div class="layer-head" role="button" tabindex="0" aria-expanded="false" onclick="tog(7)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog(7)}">
+      <div class="lh-num">VII</div>
+      <div class="lh-stripe"></div>
+      <div class="lh-body">
+        <div class="lh-label">Layer 7 &middot; The title</div>
+        <div class="lh-title">Naming — <em>what the title reveals and what it withholds</em></div>
+      </div>
+      <div class="lh-arrow">▼</div>
+    </div>
+    <div class="layer-body">
+      <div class="lb-section">
+        <div class="lb-section-label">The title as compositional act</div>
+        <p class="lb-text">Messiaen's titles are never neutral. <em>Chronochromie</em> — from the Greek <em>Kronos</em> (time) and <em>Khroma</em> (colour) — names the work's central claim: that time, organised as this work organises it, has the quality of colour. The title does not describe the work from outside; it states the work's thesis from within. A listener who knows the title before hearing the work is asked to listen differently — to attend to duration as a sensory rather than merely a temporal event.</p>
+        <p class="lb-text">The title arrives last in the compositional process but frames everything that precedes it in retrospect. It is the moment at which the composer steps back from the material and identifies what the material has been doing. Messiaen could not have titled the work before the permutation scheme was in place, before the colour chords were deployed, before the Épode existed — because the title names a convergence of elements that only became a convergence in the act of completion.</p>
+        <div class="lb-detail">
+          <strong>Khroma and concealment.</strong> The musicologist Ian Darbyshire has proposed a poetic reading of the title in which <em>khroma</em> functions not only as "colour" but as "surface" — in ancient Greek, <em>khroma</em> also denotes the skin or outer layer of a body. On this reading, <em>Chronochromie</em> names not only "the colour of time" but "the skin of time": the idea that the work's dense harmonic and rhythmic surface is what time looks like from the outside, covering the durational structures that organise it from within. This is a reading, not an etymology — but it is a reading Messiaen's own language of colour-as-perception makes plausible.
+        </div>
+      </div>
+      <div class="lb-section">
+        <div class="lb-section-label">What the title withholds</div>
+        <p class="lb-text">The title says nothing about the birds, nothing about the field notebooks, nothing about the permutation scheme, nothing about Messiaen's Catholic faith or his theology of created time. A listener arriving at the work with only the title knows that time and colour are the subject — and is given no further guidance. The other six layers are not in the title. They are in the work, available to those who choose to look for them, withheld from those who do not.</p>
+        <p class="lb-text">This is the last compositional decision: what to name, and therefore what to foreground, and what to leave for the listener to find or not find. The title is the composer's final act of selection.</p>
+        <div class="lb-question">The title names the result, not the process. Is the process — the field notebooks, the Indian talas, the synesthetic colours — part of the work, or only part of its making?</div>
+      </div>
+      <div class="lb-listen">
+        <div class="lb-listen-icon">▶</div>
+        <div>
+          <div class="lb-listen-label">Listen — Chronochromie complete</div>
+          <div class="lb-listen-text"><a href="https://www.youtube.com/watch?v=7sVQj-MBgig" target="_blank" style="color:var(--ab);text-decoration:none;border-bottom:.5px solid rgba(224,90,77,0.6)">Dorati / BBC Symphony Orchestra (1964) → complete work, 22 min.</a> — the reference recording. Or: <a href="https://www.youtube.com/watch?v=_0b7mpiz-xc" target="_blank" style="color:var(--ab);text-decoration:none;border-bottom:.5px solid rgba(224,90,77,0.6)">Rickenbacher / BR-Symphonieorchester →</a> — listen first without knowing the seven layers, then listen again.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /layers -->
+
+<div class="closing">
+  <p>Sources: Olivier Messiaen, <em>Traité de rythme, de couleur et d'ornithologie</em>, 7 vols. (Alphonse Leduc, 1994–2002); <em>Technique de mon langage musical</em> (Alphonse Leduc, 1944); Peter Hill and Nigel Simeone, <em>Messiaen</em> (Yale University Press, 2005); Amy Bauer, "The Impossible Charm of Messiaen's Chronochromie," in <em>Messiaen Studies</em>, ed. Robert Sholl (Cambridge University Press, 2008). Part of Urwork FIG–07 &middot; urwork.substack.com &middot; urwork-encyclopedia.github.io</p>
+</div>
+
+</main>
+
+<footer class="ft">
+  <div class="fl">Ur<em>work</em></div>
+  <div class="fr">Encyclopedia of the Creative Process<br>urwork.substack.com &middot; urwork-encyclopedia.github.io</div>
+</footer>
+
+<script>
+function tog(n, fromNav){
+  const el = document.getElementById('layer-'+n);
+  const wasOpen = el.classList.contains('open');
+  const head = el.querySelector('.layer-head');
+  const btn = document.querySelector('.ln-btn[data-l="'+n+'"]');
+
+  if(wasOpen && fromNav){
+    // Depuis la nav : déjà ouvert → scroller sans fermer
+    setTimeout(function(){
+      const nav = document.getElementById('nav');
+      const navH = nav ? nav.offsetHeight : 0;
+      const top = el.getBoundingClientRect().top + window.scrollY - navH - 12;
+      window.scrollTo({top:top, behavior:'smooth'});
+    }, 0);
+    return;
+  }
+
+  // Basculer l'état
+  el.classList.toggle('open', !wasOpen);
+  if(head) head.setAttribute('aria-expanded', (!wasOpen).toString());
+  if(btn) btn.classList.toggle('on', !wasOpen);
+  updateDim();
+
+  // Scroll si on vient d'ouvrir
+  if(!wasOpen){
+    setTimeout(function(){
+      const nav = document.getElementById('nav');
+      const navH = nav ? nav.offsetHeight : 0;
+      const top = el.getBoundingClientRect().top + window.scrollY - navH - 12;
+      window.scrollTo({top:top, behavior:'smooth'});
+    }, 80);
+  }
+}
+function updateDim(){
+  const anyOpen = document.querySelectorAll('.layer.open').length > 0;
+  document.querySelectorAll('.layer').forEach(l=>{
+    l.classList.toggle('dimmed', anyOpen && !l.classList.contains('open'));
+  });
+}
+</script>
+</body>
+</html>
