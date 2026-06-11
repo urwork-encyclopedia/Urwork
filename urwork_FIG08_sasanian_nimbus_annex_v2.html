@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urwork — How the Nimbus Was Built · FIG–08 Annex</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0c0a07;--bg2:#141210;--bg3:#1c1a16;--bg4:#221f1a;
+  --bone:#f0ebe3;--bone2:rgba(240,235,227,0.82);--bone3:rgba(240,235,227,0.70);
+  --bone4:rgba(240,235,227,0.55);--bone5:rgba(240,235,227,0.12);
+  --accent:#c0392b;--ab:#f07868;--gold:#c8943a;--gold-bg:rgba(200,148,58,0.1);
+  --c1:#7a5a9a;--c1t:#c4aae8;
+  --c2:#4a7fa5;--c2t:#8ec8f0;
+  --c3:#3a8a6a;--c3t:#7ad4aa;
+  --c4:#8a6a3a;--c4t:#d4b880;
+  --c5:#5a7a3a;--c5t:#a0c870;
+  --c6:#6a3a7a;--c6t:#c090d8;
+  --cormorant:'Cormorant Garamond',serif;--sans:'DM Sans',sans-serif;
+}
+html{background:var(--bg);color:var(--bone);font-family:var(--sans);font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+.hdr{padding:1.75rem 4rem 1.5rem;border-bottom:.5px solid var(--bone5);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.logo{font-family:var(--cormorant);font-size:1.3rem;font-weight:300;letter-spacing:-.02em}
+.logo em{font-style:italic;color:var(--ab)}
+.ref{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--bone3)}
+.ref b{color:var(--ab)}
+
+.ttl{padding:3.5rem 4rem 2rem;text-align:center}
+.eyebrow{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--ab);margin-bottom:1rem;opacity:0;animation:fu .7s .1s ease forwards}
+.ttl h1{font-family:var(--cormorant);font-size:clamp(2rem,4.5vw,3.8rem);font-weight:300;line-height:1.05;letter-spacing:-.02em;color:var(--bone);margin-bottom:.5rem;opacity:0;animation:fu .7s .3s ease forwards}
+.ttl h1 em{font-style:italic;color:rgba(240,235,227,0.65)}
+.tsub{font-family:var(--cormorant);font-style:italic;font-size:1.05rem;color:rgba(240,235,227,0.78);margin-bottom:.4rem;opacity:0;animation:fu .7s .5s ease forwards}
+.tinfo{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(240,235,227,0.52);opacity:0;animation:fu .7s .7s ease forwards}
+@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.intro{max-width:760px;margin:0 auto;padding:0 4rem 2rem}
+.intro p{font-size:.9rem;line-height:1.9;color:var(--bone2);margin-bottom:.85rem}
+.intro p:last-child{margin-bottom:0}
+
+.legend{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--bone5);border:none;border-bottom:.5px solid var(--bone5);border-radius:0;overflow:hidden;margin:0;position:sticky;top:0;z-index:100;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.leg-cell{background:rgba(20,18,16,0.97);padding:.75rem .85rem;cursor:pointer;transition:background .15s;user-select:none}
+.leg-cell:hover,.leg-cell.active{background:var(--bg3)}
+.leg-top{display:flex;align-items:center;gap:.45rem;margin-bottom:.25rem}
+.leg-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.leg-num{font-size:8px;letter-spacing:.18em;text-transform:uppercase;font-weight:500}
+.leg-title{font-size:.68rem;color:var(--bone4);line-height:1.35}
+.leg-cell.active .leg-title{color:var(--bone2)}
+
+.panels{max-width:760px;margin:0 auto;padding:0 4rem 5rem}
+.panel{display:none}
+.panel.active{display:block}
+
+.panel-hdr{display:flex;align-items:center;gap:1rem;padding:1.1rem 0 1rem;border-bottom:.5px solid var(--bone5);margin-bottom:0}
+.ph-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.ph-meta{flex:1}
+.ph-label{font-size:8px;letter-spacing:.22em;text-transform:uppercase;margin-bottom:.2rem}
+.ph-title{font-family:var(--cormorant);font-size:1.4rem;font-weight:400;line-height:1.2}
+.ph-num{font-family:var(--cormorant);font-size:3rem;font-weight:300;font-style:italic;color:var(--bone4);line-height:1;flex-shrink:0}
+
+.panel-block{border:.5px solid var(--bone5);border-radius:6px;overflow:hidden;margin-bottom:1.25rem}
+.tr-still{width:100%;overflow:hidden;background:var(--bg)}
+.tr-still img{width:100%;max-height:360px;object-fit:cover;object-position:center top;display:block;filter:brightness(.88)}
+.tr-still-pair{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--bg)}
+.tr-still-pair img{width:100%;max-height:300px;object-fit:cover;object-position:center top;display:block;filter:brightness(.88)}
+.tr-still-full{width:100%;overflow:hidden;background:var(--bg)}
+.tr-still-full img{width:100%;display:block;filter:brightness(.92)}
+.tr-caption{background:var(--bg4);padding:.55rem 1.25rem;font-size:.72rem;font-style:italic;color:rgba(240,235,227,0.42);border-bottom:.5px solid var(--bone5)}
+
+.cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--bone5)}
+.col{background:var(--bg2);padding:1.25rem}
+.col-hdr{font-size:8px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.75rem;padding-bottom:.6rem;border-bottom:.5px solid var(--bone5)}
+.col p{font-size:.82rem;line-height:1.82;color:var(--bone2);margin-bottom:.6rem}
+.col p:last-child{margin-bottom:0}
+.col .key{color:var(--bone);font-weight:500}
+.col .abs{font-style:italic;color:rgba(240,235,227,0.52)}
+
+/* Panel 4 text blocks */
+.three-blocks{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--bone5)}
+.tb{background:var(--bg2);padding:1.1rem}
+.tb-label{font-size:8px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.6rem;padding-bottom:.5rem;border-bottom:.5px solid var(--bone5)}
+.tb p{font-size:.8rem;line-height:1.82;color:var(--bone2);margin-bottom:.5rem}
+.tb p:last-child{margin-bottom:0}
+.tb .key{color:var(--bone);font-weight:500}
+.tb .abs{font-style:italic;color:rgba(240,235,227,0.52)}
+
+/* Panel 6 synthesis text */
+.synth-body{background:var(--bg2);padding:1.5rem}
+.synth-body p{font-size:.88rem;line-height:1.9;color:var(--bone2);margin-bottom:1rem}
+.synth-body p:last-child{margin-bottom:0}
+.synth-body .key{color:var(--bone);font-weight:500}
+.synth-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--bone5);margin-top:1px}
+.synth-cell{background:var(--bg2);padding:1.1rem}
+.synth-cell-label{font-size:8px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.5rem;padding-bottom:.45rem;border-bottom:.5px solid var(--bone5)}
+.synth-cell p{font-size:.8rem;line-height:1.8;color:var(--bone2);margin-bottom:.45rem}
+.synth-cell p:last-child{margin-bottom:0}
+.synth-cell .key{color:var(--bone);font-weight:500}
+
+.res{background:var(--bg4);border:.5px solid var(--bone5);border-radius:4px;padding:.9rem 1.25rem;margin-top:.25rem}
+.res-label{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:rgba(240,235,227,0.52);margin-bottom:.3rem}
+.res p{font-size:.8rem;font-style:italic;color:var(--bone3);line-height:1.7;margin:0}
+.res strong{font-style:normal;color:var(--bone2);font-weight:500}
+
+.note{background:var(--gold-bg);border-left:2px solid var(--gold);padding:1rem 1.25rem;border-radius:0 4px 4px 0;margin:1.25rem 0 0}
+.note-label{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}
+.note p{font-size:.8rem;font-style:italic;color:var(--bone2);margin:0;line-height:1.8}
+
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:2rem;padding-top:1.25rem;border-top:.5px solid var(--bone5)}
+.nav-btn{font-size:9px;letter-spacing:.18em;text-transform:uppercase;background:transparent;border:.5px solid var(--bone4);color:var(--bone3);padding:.55rem 1.1rem;border-radius:3px;cursor:pointer;transition:border-color .18s,color .18s;font-family:var(--sans)}
+.nav-btn:hover:not(:disabled){border-color:var(--bone2);color:var(--bone)}
+.nav-btn:disabled{opacity:.22;cursor:default}
+.nav-pos{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--bone3)}
+
+.tab-switcher{display:none;visibility:hidden}
+.tab-btns{display:flex;border-bottom:.5px solid var(--bone5)}
+.tab-btn{flex:1;padding:.65rem .4rem;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;font-family:var(--sans);font-weight:300;color:var(--bone3);transition:color .15s,border-color .15s,background .15s}
+.tab-panel{display:none;padding:1.1rem 1.1rem .9rem;background:var(--bg2)}
+.tab-panel.active{display:block}
+.tab-panel p{font-size:.83rem;line-height:1.85;color:var(--bone2);margin-bottom:.65rem}
+.tab-panel p:last-child{margin-bottom:0}
+.tab-panel .key{color:var(--bone);font-weight:500}
+.tab-panel .abs{font-style:italic;color:rgba(240,235,227,0.52)}
+
+.ft{border-top:.5px solid var(--bone5);padding:1.25rem 4rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem}
+.fl{font-family:var(--cormorant);font-size:1.1rem;font-weight:300}
+.fl em{font-style:italic;color:var(--ab)}
+.fr{font-size:.7rem;color:rgba(240,235,227,0.52);text-align:right;line-height:1.6}
+
+@media(max-width:680px){
+  .hdr,.ttl,.intro,.panels,.ft{padding-left:1.25rem;padding-right:1.25rem}
+  .legend{grid-template-columns:repeat(3,1fr)}
+  .leg-cell{min-height:44px}
+  .cols,.three-blocks,.synth-grid{display:none}
+  .tab-switcher{display:block;visibility:visible;border-top:.5px solid var(--bone5)}
+  .tr-still img,.tr-still-pair img{max-height:200px}
+  .ttl h1{font-size:clamp(1.8rem,8vw,3rem)}
+  .ft{flex-direction:column;gap:.35rem;text-align:center}
+  .fr{text-align:center}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="logo">Ur<em>work</em></div>
+  <div class="ref">Interactive annex · <b>FIG–08</b> · The Sasanian Nimbus</div>
+</header>
+
+<main>
+<div class="ttl">
+  <div class="eyebrow">Six sources · Six panels · Interactive annex</div>
+  <h1>How the Nimbus<br><em>Was Built</em></h1>
+  <p class="tsub">The six elements that converged, under political and theological pressure, into the Sasanian punctiform disc</p>
+  <p class="tinfo">Sasanian Empire · 3rd–7th century CE · From the winged disc of Persepolis to the plate of Yazdgard I</p>
+</div>
+
+<div class="intro">
+  <p>The Sasanian nimbus was not invented. It was assembled — from six distinct elements, none sufficient alone, each contributing something the others could not provide. The panels below trace each element: what it was in its original context, why it was insufficient, and what it contributed to the composite sign. The sixth panel is the synthesis.</p>
+</div>
+
+<div class="legend" id="legend">
+    <div class="leg-cell active" role="button" tabindex="0" aria-pressed="true" onclick="goTo(0)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goTo(0)}">
+      <div class="leg-top"><div class="leg-dot" style="background:var(--c1)"></div><span class="leg-num" style="color:var(--c1t)">I</span></div>
+      <div class="leg-title">Winged disc — Achaemenid</div>
+    </div>
+    <div class="leg-cell" role="button" tabindex="0" aria-pressed="false" onclick="goTo(1)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goTo(1)}">
+      <div class="leg-top"><div class="leg-dot" style="background:var(--c2)"></div><span class="leg-num" style="color:var(--c2t)">II</span></div>
+      <div class="leg-title">Solar halo — Hellenistic</div>
+    </div>
+    <div class="leg-cell" role="button" tabindex="0" aria-pressed="false" onclick="goTo(2)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goTo(2)}">
+      <div class="leg-top"><div class="leg-dot" style="background:var(--c3)"></div><span class="leg-num" style="color:var(--c3t)">III</span></div>
+      <div class="leg-title">Prâbha — Gandhāran</div>
+    </div>
+    <div class="leg-cell" role="button" tabindex="0" aria-pressed="false" onclick="goTo(3)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goTo(3)}">
+      <div class="leg-top"><div class="leg-dot" style="background:var(--c4)"></div><span class="leg-num" style="color:var(--c4t)">IV</span></div>
+      <div class="leg-title">Xvarrah — necessity</div>
+    </div>
+    <div class="leg-cell" role="button" tabindex="0" aria-pressed="false" onclick="goTo(4)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goTo(4)}">
+      <div class="leg-top"><div class="leg-dot" style="background:var(--c5)"></div><span class="leg-num" style="color:var(--c5t)">V</span></div>
+      <div class="leg-title">Korymbos — royal substrate</div>
+    </div>
+    <div class="leg-cell" role="button" tabindex="0" aria-pressed="false" onclick="goTo(5)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goTo(5)}">
+      <div class="leg-top"><div class="leg-dot" style="background:var(--c6)"></div><span class="leg-num" style="color:var(--c6t)">VI</span></div>
+      <div class="leg-title">Synthesis — Yazdgard I</div>
+    </div>
+</div>
+
+<div class="panels">
+
+<!-- PANEL 1 -->
+<div class="panel active" id="p0">
+  <div class="panel-hdr">
+    <div class="ph-dot" style="background:var(--c1)"></div>
+    <div class="ph-meta">
+      <div class="ph-label" style="color:var(--c1t)">Source I · Achaemenid Persia · 6th–4th century BCE</div>
+      <div class="ph-title" style="color:var(--bone)">The winged disc of Persepolis — divine favour from above</div>
+    </div>
+    <div class="ph-num">I</div>
+  </div>
+  <div class="panel-block">
+    <div class="tr-still"><img src="01_persepolis.jpg" alt="Fravahar — Palace of Xerxes, Persepolis"></div>
+    <div class="tr-caption">Fravahar — Achaemenid relief, Palace of Xerxes, Persepolis, 5th century BCE</div>
+    <div class="cols">
+      <div class="col">
+        <div class="col-hdr" style="color:var(--c1t)">In its original context</div>
+        <p>The winged disc — the <em>fravahar</em> — hovers <span class="key">above</span> the king in Achaemenid royal scenes, conferring divine favour from celestial superiority. A human bust emerges from a disc flanked by great wings. Its Egyptian origin (the solar disc of Horus) was transmitted through Assyria to the Achaemenids. The figure likely represents both Ahura Mazdā and a solar deity — a deliberate doubling giving the symbol unusual theological flexibility.</p>
+      </div>
+      <div class="col">
+        <div class="col-hdr" style="color:var(--c1t)">Why it was insufficient</div>
+        <p>The disc floats <span class="key">above</span> the king, not on him. Divine favour descends from outside — the god above dispenses grace to the king below. The Sasanian programme needed a sign carried by the king himself, present in his very person. The disc needed to move from the sky to the head. <span class="abs">The Achaemenid vocabulary was also five centuries old by the 3rd century CE — useful as a dynastic claim, but insufficient as a living visual language.</span></p>
+      </div>
+      <div class="col">
+        <div class="col-hdr" style="color:var(--c1t)">What it contributed</div>
+        <p>Two fundamental properties: the <span class="key">circular form</span> as the right visual container for divine favour — enclosing, framing, marking a zone of special presence. And the logic of <span class="key">extrinsic, revocable grace</span> — a quality held by virtue of a relationship with the divine order, not inherent to the person, and therefore capable of being lost.</p>
+      </div>
+    </div>
+    <div class="tab-switcher">
+      <div class="tab-btns">
+        <button class="tab-btn" data-color="var(--c1t)" style="color:var(--c1t);border-bottom-color:var(--c1)" onclick="swTab(this,'t0a')">Context</button>
+        <button class="tab-btn" onclick="swTab(this,'t0b')">Insufficiency</button>
+        <button class="tab-btn" onclick="swTab(this,'t0c')">Contribution</button>
+      </div>
+      <div class="tab-panel active" id="t0a"><p>The <em>fravahar</em> hovers <span class="key">above</span> the king. Egyptian in origin, transmitted through Assyria. The figure represents both Ahura Mazdā and a solar deity — a deliberate doubling.</p></div>
+      <div class="tab-panel" id="t0b"><p>The disc floats above the king, not on him. The Sasanian programme needed a sign on the king's person. The disc needed to <span class="key">move from sky to head</span>.</p></div>
+      <div class="tab-panel" id="t0c"><p>The <span class="key">circular form</span> as the right container, and the logic of <span class="key">extrinsic, revocable grace</span> — a quality held by relationship with the divine, capable of being lost.</p></div>
+    </div>
+  </div>
+  <div class="res"><div class="res-label">What it provided</div><p>The <strong>circular form</strong> and the logic of <strong>extrinsic, revocable divine grace</strong>.</p></div>
+  <div class="nav"><button class="nav-btn" disabled>← Previous</button><span class="nav-pos">1 / 6</span><button class="nav-btn" onclick="goTo(1)">Next →</button></div>
+</div>
+
+<!-- PANEL 2 -->
+<div class="panel" id="p1">
+  <div class="panel-hdr">
+    <div class="ph-dot" style="background:var(--c2)"></div>
+    <div class="ph-meta">
+      <div class="ph-label" style="color:var(--c2t)">Source II · Hellenistic world · 4th century BCE – 3rd century CE</div>
+      <div class="ph-title" style="color:var(--bone)">The solar halo of Helios — radiance that emanates from within</div>
+    </div>
+    <div class="ph-num">II</div>
+  </div>
+  <div class="panel-block">
+    <div class="tr-still-pair">
+      <img src="02a_helios_metope.jpg" alt="Helios — metope, Temple of Athena at Ilion, Pergamon Museum Berlin">
+      <img src="02b_helios_rhodes.jpg" alt="Helios — silver tetradrachm, Rhodes, c. 304–189 BCE">
+    </div>
+    <div class="tr-caption">Left: Helios, metope from the Temple of Athena at Ilion, Pergamon Museum, Berlin · Right: Helios, silver tetradrachm, Rhodes, c. 304–189 BCE</div>
+    <div class="cols">
+      <div class="col">
+        <div class="col-hdr" style="color:var(--c2t)">In its original context</div>
+        <p>In monumental sculpture and in numismatic circulation, the Greek solar halo says the same thing: luminosity <span class="key">originates within the figure</span>. Helios does not receive light — he is light. The Rhodian tetradrachm is crucial: this was the visual form most widely circulated and most frequently encountered by Sasanian workshops — not the monument, but the coin that crossed every border.</p>
+      </div>
+      <div class="col">
+        <div class="col-hdr" style="color:var(--c2t)">Why it was insufficient</div>
+        <p>The solar halo is a sign of <span class="key">intrinsic divinity</span>. A figure wearing it claims to be divine. Within the Zoroastrian framework, the distinction between the divine and the human was fundamental. The most important intermediary was Mithra — increasingly assimilated to Helios in the Parthian period — who does carry the radiate crown. <span class="abs">But Mithra is a god. The Sasanian king is not.</span></p>
+      </div>
+      <div class="col">
+        <div class="col-hdr" style="color:var(--c2t)">What it contributed</div>
+        <p>The <span class="key">cephalic focus</span> — the head as the specific seat of transcendent quality, the point the sign encircles. The Achaemenid disc floated away from the body; the Gandhāran <em>prâbha</em> encompasses both a cephalic disc and a full-body mandorla. The Greek solar tradition insists on the head, precisely. It also confirmed the numismatic model: the available model was the coin, not the monument.</p>
+      </div>
+    </div>
+    <div class="tab-switcher">
+      <div class="tab-btns">
+        <button class="tab-btn" data-color="var(--c2t)" style="color:var(--c2t);border-bottom-color:var(--c2)" onclick="swTab(this,'t1a')">Context</button>
+        <button class="tab-btn" onclick="swTab(this,'t1b')">Insufficiency</button>
+        <button class="tab-btn" onclick="swTab(this,'t1c')">Contribution</button>
+      </div>
+      <div class="tab-panel active" id="t1a"><p>In sculpture and coinage, the Greek solar halo says: luminosity <span class="key">originates within the figure</span>. The Rhodian coin was the most widely circulated model.</p></div>
+      <div class="tab-panel" id="t1b"><p>The solar halo is a sign of <span class="key">intrinsic divinity</span>. Even via Mithra — who carries the radiate crown — the model was reserved for gods. <span class="abs">The king is not a god.</span></p></div>
+      <div class="tab-panel" id="t1c"><p>The <span class="key">cephalic focus</span> — the head, precisely, as the seat of transcendent marking — and the numismatic model of widely circulated imagery.</p></div>
+    </div>
+  </div>
+  <div class="res"><div class="res-label">What it provided</div><p>The <strong>cephalic focus</strong> — the head as the specific seat of the sign.</p></div>
+  <div class="nav"><button class="nav-btn" onclick="goTo(0)">← Previous</button><span class="nav-pos">2 / 6</span><button class="nav-btn" onclick="goTo(2)">Next →</button></div>
+</div>
+
+<!-- PANEL 3 -->
+<div class="panel" id="p2">
+  <div class="panel-hdr">
+    <div class="ph-dot" style="background:var(--c3)"></div>
+    <div class="ph-meta">
+      <div class="ph-label" style="color:var(--c3t)">Source III · Gandhāran art · 1st–4th century CE</div>
+      <div class="ph-title" style="color:var(--bone)">The prâbha — the disc that encircles without radiating</div>
+    </div>
+    <div class="ph-num">III</div>
+  </div>
+  <div class="panel-block">
+    <div class="tr-still" style="max-height:none"><img src="03_bodhisattva.jpg" alt="Bodhisattva with nimbus — Gandhāran sculpture, 2nd–3rd century CE" style="max-height:none;object-fit:contain;object-position:center;background:var(--bg)"></div>
+    <div class="tr-caption">Bodhisattva with nimbus — Gandhāran sculpture, schist, 2nd–3rd century CE</div>
+    <div class="cols">
+      <div class="col">
+        <div class="col-hdr" style="color:var(--c3t)">In its original context</div>
+        <p>The Gandhāran <em>prâbha</em> developed from the same Hellenistic sources as the solar halo, but arrived at a radically different form. The disc behind the Bodhisattva's head is <span class="key">flat and smooth</span> — it does not radiate, it simply frames. A perfect circle, separate from the figure, marking the space behind and around the head. Developed in the 1st–2nd centuries CE, before the Sasanian dynasty existed.</p>
+      </div>
+      <div class="col">
+        <div class="col-hdr" style="color:var(--c3t)">Why it was insufficient</div>
+        <p>The <em>prâbha</em> marks <span class="key">permanent, achieved transcendence</span>. The Bodhisattva who wears this disc wears it forever. It cannot be lost. The Sasanian <em>xvarrah</em> was precisely the opposite: real and luminous and powerful, but revocable. Yima's <em>xvarrah</em> abandoned him when he failed. <span class="abs">A sign of permanence cannot express precariousness.</span></p>
+      </div>
+      <div class="col">
+        <div class="col-hdr" style="color:var(--c3t)">What it contributed</div>
+        <p>The decisive formal breakthrough: a <span class="key">disc behind and around the head</span>, distinct from the figure, encircling without radiating — the right shape for something held from outside rather than generated from within. The Sasanian-Gandhāran relationship was one of <span class="key">parallel development</span> from shared Hellenistic sources, not direct linear influence.</p>
+      </div>
+    </div>
+    <div class="tab-switcher">
+      <div class="tab-btns">
+        <button class="tab-btn" data-color="var(--c3t)" style="color:var(--c3t);border-bottom-color:var(--c3)" onclick="swTab(this,'t2a')">Context</button>
+        <button class="tab-btn" onclick="swTab(this,'t2b')">Insufficiency</button>
+        <button class="tab-btn" onclick="swTab(this,'t2c')">Contribution</button>
+      </div>
+      <div class="tab-panel active" id="t2a"><p>The Gandhāran <em>prâbha</em> is <span class="key">flat and smooth</span> — it frames without radiating. From the same Hellenistic sources, arriving independently at the closest formal antecedent.</p></div>
+      <div class="tab-panel" id="t2b"><p>The <em>prâbha</em> marks <span class="key">permanent transcendence</span>. The Sasanian <em>xvarrah</em> was revocable. <span class="abs">A sign of permanence cannot express precariousness.</span></p></div>
+      <div class="tab-panel" id="t2c"><p>The decisive breakthrough: a <span class="key">disc behind and around the head</span>, encircling without radiating — the right shape for something held from outside, not generated from within.</p></div>
+    </div>
+  </div>
+  <div class="res"><div class="res-label">What it provided</div><p>The decisive formal breakthrough: the <strong>encircling flat disc behind the head</strong>.</p></div>
+  <div class="nav"><button class="nav-btn" onclick="goTo(1)">← Previous</button><span class="nav-pos">3 / 6</span><button class="nav-btn" onclick="goTo(3)">Next →</button></div>
+</div>
+
+<!-- PANEL 4 -->
+<div class="panel" id="p3">
+  <div class="panel-hdr">
+    <div class="ph-dot" style="background:var(--c4)"></div>
+    <div class="ph-meta">
+      <div class="ph-label" style="color:var(--c4t)">Source IV · Zoroastrian theology · Avestan and Pahlavi traditions</div>
+      <div class="ph-title" style="color:var(--bone)">The xvarrah — the necessity that had no image</div>
+    </div>
+    <div class="ph-num">IV</div>
+  </div>
+  <div class="panel-block">
+    <div class="tr-still"><img src="04_yasht19.jpg" alt="Yasht 19 — Avestan text, Pahlavi transcription" style="object-fit:contain;object-position:center;background:#0c0a07;max-height:240px"></div>
+    <div class="tr-caption">Yasht 19 (Zamyād Yašt) — Avestan text in Pahlavi transcription · The episode of Yima's xvarrah is in strophes 34–38</div>
+    <div class="three-blocks">
+      <div class="tb">
+        <div class="tb-label" style="color:var(--c4t)">What the texts say</div>
+        <p>The <em>xvarrah</em> is a luminous quality that qualifies certain individuals for specific functions. Jean Kellens describes the Avestan concept as <span class="key">"force-d'abondance"</span> — a magical power of abundance enabling the fulfilment of a cosmic mission. In Yasht 19.35, when Yima fails in his obligations, the <em>xvarrah</em> abandons him — departing in the form of a bird. It is not destroyed. It simply leaves. The <span class="key">precariousness</span> of the quality is built into its theological definition.</p>
+        <p class="abs">Note: the distinction between the Avestan xvarenah and the Pahlavi xvarrah remains actively debated. Kellens, Gnoli, and Grenet do not fully converge. What follows is a provisional reading.</p>
+      </div>
+      <div class="tb">
+        <div class="tb-label" style="color:var(--c4t)">Why there was no image</div>
+        <p>The Mazdean religious tradition was, from the Achaemenid period, <span class="key">fundamentally resistant to figuration</span>. The divine entities of the Zoroastrian pantheon had been abstracted into notions rather than persons — patronising functions without being embodied in depictable figures. The <em>xvarrah</em> was a luminous abstraction: present and real and powerful, but belonging to a system that had systematically avoided giving its concepts visible form.</p>
+      </div>
+      <div class="tb">
+        <div class="tb-label" style="color:var(--c4t)">What it contributed — a necessity</div>
+        <p>The <em>xvarrah</em> contributed not a visual form but the <span class="key">exact theological requirement</span> the form had to satisfy: luminous, on the king's person, encircling the head, signifying both presence and potential absence, specific to the royal function.</p>
+        <p><span class="key">No existing visual form satisfied all of these simultaneously.</span> The <em>xvarrah</em> was the void that forced the synthesis. Without this specific necessity, the Sasanian workshops could have adopted any existing model. Because of it, they had to assemble a new one.</p>
+      </div>
+    </div>
+  </div>
+  <div class="note"><div class="note-label">On the scholarly debate</div><p>The relationship between the Avestan <em>xvarenah</em> and the Sasanian <em>xvarrah</em> is not a simple evolution. Kellens argues that treating <em>xvarenah</em> as "royal glory" is anachronistic at the Avestan stage; Gnoli and Grenet emphasise continuities he questions. The interpretation here follows the reading most consistent with the visual evidence.</p></div>
+  <div class="res"><div class="res-label">What it provided</div><p>Not a form but a <strong>necessity</strong> — the precise set of requirements that forced the composite sign into existence.</p></div>
+  <div class="nav"><button class="nav-btn" onclick="goTo(2)">← Previous</button><span class="nav-pos">4 / 6</span><button class="nav-btn" onclick="goTo(4)">Next →</button></div>
+</div>
+
+<!-- PANEL 5 -->
+<div class="panel" id="p4">
+  <div class="panel-hdr">
+    <div class="ph-dot" style="background:var(--c5)"></div>
+    <div class="ph-meta">
+      <div class="ph-label" style="color:var(--c5t)">Source V · Sasanian court art · 3rd–7th century CE</div>
+      <div class="ph-title" style="color:var(--bone)">The korymbos and the royal substrate — what was already there</div>
+    </div>
+    <div class="ph-num">V</div>
+  </div>
+  <div class="panel-block">
+    <div class="tr-still" style="max-height:none"><img src="05_taqe_bostan.jpg" alt="Taq-e Bostan — Ardashir II investiture relief" style="max-height:none;object-fit:contain;object-position:center;background:var(--bg)"></div>
+    <div class="tr-caption">Taq-e Bostan, investiture relief of Ardashir II, ca. 379–383 CE</div>
+    <div style="background:var(--bg2);padding:1.25rem;border-top:.5px solid var(--bone5);display:flex;align-items:flex-start;gap:1.25rem">
+      <div style="width:130px;height:130px;border-radius:50%;overflow:hidden;flex-shrink:0;border:.5px solid rgba(240,235,227,0.18)">
+        <img src="05b_taqe_bostan_detail.jpg" alt="Detail — korymbos, Taq-e Bostan" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:brightness(.95)">
+      </div>
+      <p style="margin:0;font-size:.82rem;line-height:1.85;color:rgba(240,235,227,0.82)">Detail: the <span class="key">korymbos</span> — the large striated globe surmounting the royal crown — is clearly visible above the king's head. It is an attribute of dynastic identity, present on every Sasanian royal representation. Distinct from the nimbus: the <em>korymbos</em> sits <span class="key">above</span> the crown, not behind or around the head. Collinet-Guérin described it as a <em>pré-nimbe</em> — a pre-nimbus — insofar as it already marks the royal head as a zone of special distinction.</p>
+    </div>
+    <div class="cols">
+      <div class="col">
+        <div class="col-hdr" style="color:var(--c5t)">The korymbos</div>
+        <p>The <em>korymbos</em> — the globe of hair or silk surmounting the Sasanian royal crown — is the standard attribute of dynastic headwear, present on every Sasanian royal representation from Ardashir I onward. It is distinct from the nimbus: it sits <span class="key">above</span> the crown, not behind or around the head. Marthe Collinet-Guérin described it as a <em>pré-nimbe</em> — a pre-nimbus — insofar as it already marks the royal head as a zone of special distinction.</p>
+      </div>
+      <div class="col">
+        <div class="col-hdr" style="color:var(--c5t)">The royal substrate</div>
+        <p>The <em>korymbos</em>, the fluttering dynastic ribbons, and the elaborate royal crown already constituted a dense visual vocabulary of royal identity before the disc-nimbus was added. The disc finds its place <span class="key">within this existing syntax</span> — it does not replace or disrupt the royal headgear but takes its position behind the head as a specifically theological element added to an already legible display of court identity.</p>
+      </div>
+      <div class="col">
+        <div class="col-hdr" style="color:var(--c5t)">What it contributed</div>
+        <p>The Sasanian royal substrate contributed the <span class="key">interpretive framework</span> within which the composite disc would be read. A viewer familiar with Sasanian royal iconography would read the disc as belonging to the same semantic field as the <em>korymbos</em> and the dynastic ribbons — as one element among others in the complex visual statement of royal legitimacy. The disc acquires its meaning <span class="key">in context</span>, not in isolation.</p>
+      </div>
+    </div>
+    <div class="tab-switcher">
+      <div class="tab-btns">
+        <button class="tab-btn" data-color="var(--c5t)" style="color:var(--c5t);border-bottom-color:var(--c5)" onclick="swTab(this,'t4a')">The korymbos</button>
+        <button class="tab-btn" onclick="swTab(this,'t4b')">Royal substrate</button>
+        <button class="tab-btn" onclick="swTab(this,'t4c')">Contribution</button>
+      </div>
+      <div class="tab-panel active" id="t4a"><p>The <em>korymbos</em> surmounts the crown on every Sasanian royal representation. It is <span class="key">above</span> the crown — distinct from the disc behind the head. Collinet-Guérin called it a <em>pré-nimbe</em>: a pre-nimbus.</p></div>
+      <div class="tab-panel" id="t4b"><p>The <em>korymbos</em>, the dynastic ribbons, and the royal crown already constituted a dense visual vocabulary. The disc finds its place <span class="key">within this existing syntax</span> — a theological element added to an already legible court display.</p></div>
+      <div class="tab-panel" id="t4c"><p>The <span class="key">interpretive framework</span> within which the disc would be read. The disc acquires its meaning in context — as one element among others in the complex visual statement of royal legitimacy.</p></div>
+    </div>
+  </div>
+  <div class="res"><div class="res-label">What it provided</div><p>The <strong>interpretive context</strong> — the existing royal visual vocabulary within which the composite disc takes its place and acquires its meaning.</p></div>
+  <div class="nav"><button class="nav-btn" onclick="goTo(3)">← Previous</button><span class="nav-pos">5 / 6</span><button class="nav-btn" onclick="goTo(5)">Next →</button></div>
+</div>
+
+<!-- PANEL 6 — SYNTHESIS -->
+<div class="panel" id="p5">
+  <div class="panel-hdr">
+    <div class="ph-dot" style="background:var(--c6)"></div>
+    <div class="ph-meta">
+      <div class="ph-label" style="color:var(--c6t)">Synthesis · Sasanian art · ca. 399–420 CE · Metropolitan Museum of Art, New York</div>
+      <div class="ph-title" style="color:var(--bone)">Plate with Yazdgard I — the composite sign complete</div>
+    </div>
+    <div class="ph-num">VI</div>
+  </div>
+  <div class="panel-block">
+    <div class="tr-still-full"><img src="06b_yazdgard_full.jpg" alt="Plate with Yazdgard I slaying a stag — Metropolitan Museum of Art, Met 1970.6, ca. 399–420 CE"></div>
+    <div class="tr-caption">Plate with Yazdgard I slaying a stag · Gilded silver · ca. 399–420 CE · Metropolitan Museum of Art, New York, Met 1970.6 · Public domain</div>
+    <div class="synth-body">
+      <p>Gilded silver, 23.3 cm diameter. The king stands, killing a rearing stag with a crescent-tipped lance — the stag's protruding tongue marks it as dying. His identity is established by his crown. Behind and around his head: a <span class="key">circular disc</span>, finely incised in the gilded surface, marked with small punctiform motifs grouped in threes. Above the crown: the <em>korymbos</em>. The two are distinct: the <em>korymbos</em> surmounts the crown; the disc encircles the head behind it.</p>
+      <div style="display:flex;align-items:flex-start;gap:1.25rem;margin:1rem 0 1rem">
+        <div style="width:140px;height:140px;border-radius:50%;overflow:hidden;flex-shrink:0;border:.5px solid rgba(240,235,227,0.18)">
+          <img src="06c_yazdgard_detail.jpg" alt="Detail — korymbos and punctiform disc, Yazdgard I" style="width:100%;height:100%;object-fit:cover;object-position:70% 40%;filter:brightness(.95)">
+        </div>
+        <p style="margin:0;font-size:.82rem;line-height:1.85;color:rgba(240,235,227,0.82)">Detail: the <span class="key">korymbos</span> (the gilded striated globe above the crown) and the <span class="key">punctiform disc</span> (the incised circle behind the head, marked with small grouped dots) are clearly distinct. The disc vibrates under the light of the silver surface — it is a texture, not a solid form. This is the visual translation of the <em>xvarrah</em>: a grace that is real but not permanent, luminous but not intrinsic.</p>
+      </div>
+    </div>
+    <div class="synth-grid">
+      <div class="synth-cell">
+        <div class="synth-cell-label" style="color:var(--c6t)">The six contributions converge</div>
+        <p>From the <span class="key">Achaemenid source</span>: the circular form and the logic of extrinsic, revocable grace.</p>
+        <p>From the <span class="key">Hellenistic source</span>: the cephalic focus — the head as the specific seat of the sign.</p>
+        <p>From the <span class="key">Gandhāran source</span>: the encircling flat disc behind the head, framing without radiating.</p>
+        <p>From the <span class="key">Zoroastrian necessity</span>: the requirement that the sign express luminosity, precariousness, and royal function simultaneously.</p>
+        <p>From the <span class="key">Sasanian royal substrate</span>: the <em>korymbos</em> and dynastic context within which the disc takes its theological place.</p>
+        <p>From the <span class="key">silversmith's hand</span>: the punctiform texture — the formal decision that makes the disc vibrate rather than assert, suggest rather than declare.</p>
+      </div>
+      <div class="synth-cell">
+        <div class="synth-cell-label" style="color:var(--c6t)">What the synthesis produced</div>
+        <p>The disc says simultaneously: <span class="key">this king is legitimate</span> — he holds the <em>xvarrah</em> — and <span class="key">this grace can be lost</span> — it is not inherent to his person. This double message could not have been produced by any of the six elements alone.</p>
+        <p>The Achaemenid disc was too distant from the body. The Hellenistic halo was too intrinsic. The Gandhāran disc was too permanent. The <em>xvarrah</em> had no image. The <em>korymbos</em> was already there but said something else. Only the composite sign, assembled under specific theological pressure, carries both meanings at once.</p>
+        <p>The Sasanian disc-nimbus is the only visual sign in the history of pre-Islamic art that simultaneously expresses <span class="key">legitimate authority</span> and <span class="key">the precariousness of that authority</span>. Neither the Christian halo, nor the Buddhist <em>prâbha</em>, nor the Hellenistic solar crown can say both things at once.</p>
+      </div>
+    </div>
+  </div>
+  <div class="nav"><button class="nav-btn" onclick="goTo(4)">← Previous</button><span class="nav-pos">6 / 6</span><button class="nav-btn" disabled>Next →</button></div>
+</div>
+
+</div>
+
+</main>
+
+<footer class="ft">
+  <div class="fl">Ur<em>work</em></div>
+  <div class="fr">Encyclopedia of the Creative Process<br>urwork.substack.com · urwork-encyclopedia.github.io</div>
+</footer>
+
+<script>
+let cur=0;
+function goTo(n){
+  document.getElementById('p'+cur).classList.remove('active');
+  const prevCell = document.querySelectorAll('.leg-cell')[cur];
+  prevCell.classList.remove('active');
+  prevCell.setAttribute('aria-pressed','false');
+  cur=n;
+  document.getElementById('p'+cur).classList.add('active');
+  const nextCell = document.querySelectorAll('.leg-cell')[cur];
+  nextCell.classList.add('active');
+  nextCell.setAttribute('aria-pressed','true');
+  setTimeout(function(){
+    const el=document.getElementById('p'+cur);
+    const legend=document.getElementById('legend');
+    const legendH=legend ? legend.offsetHeight : 0;
+    const top=el.getBoundingClientRect().top+window.scrollY-legendH-12;
+    window.scrollTo({top:top,behavior:'smooth'});
+  },80);
+}
+function swTab(btn,tabId){
+  const sw=btn.closest('.tab-switcher');
+  sw.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  sw.querySelectorAll('.tab-btn').forEach(b=>{b.style.borderBottomColor='transparent';});
+  document.getElementById(tabId).classList.add('active');
+  btn.style.borderBottomColor = btn.dataset.color || btn.style.color || 'rgba(240,235,227,0.5)';
+}
+</script>
+</body>
+</html>
