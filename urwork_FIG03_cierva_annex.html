@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urwork — FIG–03 · Cierva · Five Prototypes</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0c0a07;--bg2:#141210;--bg3:#1c1a16;--bg4:#221f1a;
+  --bone:#f0ebe3;--bone2:rgba(240,235,227,0.82);--bone3:rgba(240,235,227,0.52);
+  --bone4:rgba(240,235,227,0.22);--bone5:rgba(240,235,227,0.1);
+  --accent:#c0392b;--ab:#f07868;--gold:#c8943a;
+  /* Prototype colours */
+  --c1:#8ab4cc;--c1bg:rgba(106,143,170,0.12);
+  --c2:#c8aa82;--c2bg:rgba(170,143,106,0.12);
+  --c3:#cc8888;--c3bg:rgba(170,106,106,0.12);
+  --c4:#88c896;--c4bg:rgba(106,170,122,0.12);
+  --heli:#c8943a;--helibg:rgba(200,148,58,0.12);
+  --cormorant:'Cormorant Garamond',serif;
+  --sans:'DM Sans',sans-serif;
+}
+html{background:var(--bg);color:var(--bone);font-family:var(--sans);font-weight:300;-webkit-font-smoothing:antialiased}
+body{max-width:100%;margin:0}
+
+/* HEADER */
+.hdr{padding:1.75rem 4rem 1.5rem;border-bottom:.5px solid var(--bone5);display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:var(--cormorant);font-size:1.3rem;font-weight:300;letter-spacing:-.02em}
+.logo em{font-style:italic;color:var(--ab)}
+.ref{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--bone3)}
+.ref b{color:var(--ab)}
+
+/* TITLE */
+.ttl{padding:3rem 4rem 2rem;text-align:center;position:relative}
+.eyebrow{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--ab);margin-bottom:1rem;opacity:0;animation:fu .7s .1s ease forwards}
+.ttl h1{font-family:var(--cormorant);font-size:clamp(2rem,5vw,3.4rem);font-weight:300;line-height:1.1;letter-spacing:-.02em;color:var(--bone);margin-bottom:.5rem;opacity:0;animation:fu .7s .3s ease forwards}
+.ttl h1 em{font-style:italic;color:rgba(240,235,227,0.65)}
+.tsub{font-family:var(--cormorant);font-style:italic;font-size:1rem;color:var(--bone3);margin-bottom:.4rem;opacity:0;animation:fu .7s .5s ease forwards}
+.tinfo{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(240,235,227,0.52);opacity:0;animation:fu .7s .7s ease forwards}
+@keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* INTRO */
+.intro{max-width:820px;margin:0 auto;padding:0 4rem 2.5rem}
+.intro p{font-size:.88rem;line-height:1.9;color:var(--bone2);margin-bottom:.75rem}
+
+/* LEGEND */
+.legend{max-width:820px;margin:0 auto;padding:0 4rem 2rem;display:flex;gap:1.5rem;flex-wrap:wrap}
+.leg-item{display:flex;align-items:center;gap:.5rem;font-size:.75rem;color:var(--bone3)}
+.leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* TIMELINE WRAPPER */
+.timeline-wrap{max-width:820px;margin:0 auto;padding:0 4rem 4rem;position:relative}
+
+/* VERTICAL SPINE */
+.spine{position:absolute;left:calc(4rem + 28px);top:0;bottom:0;width:.5px;background:rgba(240,235,227,0.08)}
+
+/* PROTOTYPE BLOCK */
+.proto{position:relative;margin-bottom:1.5rem;padding-left:72px;cursor:pointer}
+
+/* NODE on spine */
+/* Restreindre la transition du nœud aux propriétés utiles */
+.proto-node{position:absolute;left:16px;top:1.4rem;width:24px;height:24px;border-radius:50%;border:1px solid;display:flex;align-items:center;justify-content:center;font-family:var(--cormorant);font-size:.75rem;font-style:italic;font-weight:600;transition:transform .2s,background .2s;background:var(--bg)}
+.proto[data-p="c1"] .proto-node{border-color:var(--c1);color:var(--c1)}
+.proto[data-p="c2"] .proto-node{border-color:var(--c2);color:var(--c2)}
+.proto[data-p="c3"] .proto-node{border-color:var(--c3);color:var(--c3)}
+.proto[data-p="c4"] .proto-node{border-color:var(--c4);color:var(--c4)}
+.proto[data-p="heli"] .proto-node{border-color:var(--heli);color:var(--heli)}
+.proto.open .proto-node,.proto:hover .proto-node{transform:scale(1.15)}
+.proto[data-p="c1"].open .proto-node,.proto[data-p="c1"]:hover .proto-node{background:var(--c1bg)}
+.proto[data-p="c2"].open .proto-node,.proto[data-p="c2"]:hover .proto-node{background:var(--c2bg)}
+.proto[data-p="c3"].open .proto-node,.proto[data-p="c3"]:hover .proto-node{background:var(--c3bg)}
+.proto[data-p="c4"].open .proto-node,.proto[data-p="c4"]:hover .proto-node{background:var(--c4bg)}
+.proto[data-p="heli"].open .proto-node,.proto[data-p="heli"]:hover .proto-node{background:var(--helibg)}
+
+/* CONNECTOR LINE from node to header */
+.proto::before{content:'';position:absolute;left:40px;top:calc(1.4rem + 11px);width:18px;height:.5px;background:rgba(240,235,227,0.08)}
+
+/* PROTO HEADER */
+.proto-head{background:var(--bg2);border:.5px solid var(--bone5);border-radius:3px;padding:1rem 1.25rem;transition:background .15s,border-color .15s}
+.proto:hover .proto-head,.proto.open .proto-head{border-color:rgba(240,235,227,0.18)}
+.proto[data-p="c1"]:hover .proto-head,.proto[data-p="c1"].open .proto-head{border-left:2px solid var(--c1)}
+.proto[data-p="c2"]:hover .proto-head,.proto[data-p="c2"].open .proto-head{border-left:2px solid var(--c2)}
+.proto[data-p="c3"]:hover .proto-head,.proto[data-p="c3"].open .proto-head{border-left:2px solid var(--c3)}
+.proto[data-p="c4"]:hover .proto-head,.proto[data-p="c4"].open .proto-head{border-left:2px solid var(--c4)}
+.proto[data-p="heli"]:hover .proto-head,.proto[data-p="heli"].open .proto-head{border-left:2px solid var(--heli)}
+
+.ph-top{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:.2rem}
+.ph-code{font-family:var(--cormorant);font-size:1.2rem;font-weight:600;font-style:italic}
+.proto[data-p="c1"] .ph-code{color:var(--c1)}
+.proto[data-p="c2"] .ph-code{color:var(--c2)}
+.proto[data-p="c3"] .ph-code{color:var(--c3)}
+.proto[data-p="c4"] .ph-code{color:var(--c4)}
+.proto[data-p="heli"] .ph-code{color:var(--heli)}
+.ph-date{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--bone3)}
+.ph-title{font-family:var(--cormorant);font-size:1rem;font-weight:300;color:var(--bone2);font-style:italic}
+.ph-status{display:inline-block;font-size:8px;letter-spacing:.18em;text-transform:uppercase;padding:2px 7px;border-radius:1px;margin-left:auto}
+.status-fail{background:rgba(192,57,43,0.2);color:var(--ab);border:.5px solid rgba(192,57,43,0.4)}
+.status-success{background:rgba(106,170,122,0.18);color:#8acca0;border:.5px solid rgba(106,170,122,0.4)}
+.status-legacy{background:var(--helibg);color:var(--heli);border:.5px solid rgba(200,148,58,0.4)}
+.ph-arrow{font-size:.65rem;color:rgba(240,235,227,0.50);margin-left:.5rem;transition:transform .2s;flex-shrink:0}
+.proto.open .ph-arrow{transform:rotate(180deg)}
+
+/* PROTO BODY */
+.proto-body{display:none;background:var(--bg3);border:.5px solid var(--bone5);border-top:none;border-radius:0 0 3px 3px;overflow:hidden}
+.proto.open .proto-body{display:block}
+
+.pb-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--bone5)}
+.pb-cell{background:var(--bg3);padding:1.1rem 1.25rem}
+.pb-cell.full{grid-column:1/-1}
+.pb-cell.dark{background:var(--bg)}
+.pb-label{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone3);margin-bottom:.4rem}
+.proto[data-p="c1"] .pb-cell .pb-label{color:var(--c1)}
+.proto[data-p="c2"] .pb-cell .pb-label{color:var(--c2)}
+.proto[data-p="c3"] .pb-cell .pb-label{color:var(--c3)}
+.proto[data-p="c4"] .pb-cell .pb-label{color:var(--c4)}
+.proto[data-p="heli"] .pb-cell .pb-label{color:var(--heli)}
+.pb-text{font-size:.82rem;line-height:1.85;color:var(--bone2)}
+.pb-text em{font-style:italic}
+.pb-text strong{font-weight:500;color:var(--bone)}
+
+/* HINGE DIAGRAM */
+.hinge-diagram{padding:1.5rem 1.25rem;background:var(--bg);border-top:.5px solid var(--bone5)}
+.hd-label{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone3);margin-bottom:1rem}
+.hd-svg-wrap{display:flex;justify-content:center}
+
+/* STRUCT NOTE */
+.struct-note{max-width:820px;margin:0 auto;padding:1.25rem 4rem;border-top:.5px solid var(--bone5);border-bottom:.5px solid var(--bone5)}
+.struct-note p{font-size:.78rem;font-style:italic;color:var(--bone3);line-height:1.85}
+.struct-note strong{font-style:normal;color:var(--bone2);font-weight:500}
+
+/* CLOSING */
+.closing{max-width:820px;margin:0 auto;padding:2rem 4rem 3.5rem}
+.closing p{font-size:.76rem;color:rgba(240,235,227,0.58);line-height:1.8}
+
+/* FOOTER */
+.ft{border-top:.5px solid var(--bone5);padding:1.25rem 4rem;display:flex;justify-content:space-between;align-items:center}
+.fl{font-family:var(--cormorant);font-size:1.1rem;font-weight:300}
+.fl em{font-style:italic;color:var(--ab)}
+.fr{font-size:.7rem;color:rgba(240,235,227,0.58);text-align:right;line-height:1.6}
+
+@media(max-width:680px){
+  .hdr,.ttl,.intro,.legend,.timeline-wrap,.struct-note,.closing,.ft{padding-left:1.25rem;padding-right:1.25rem}
+  .spine{left:calc(1.25rem + 28px)}
+  .pb-grid{grid-template-columns:1fr}
+  .pb-cell.full{grid-column:auto}
+  /* Timeline : réduire le padding gauche sur mobile */
+  .proto{padding-left:56px}
+  .proto-node{left:8px}
+  .proto::before{left:32px;width:12px}
+  /* Titres */
+  .ttl h1{font-size:clamp(1.7rem,7.5vw,2.6rem)}
+  .tsub{font-size:.9rem}
+  /* En-têtes de prototype */
+  .ph-top{gap:.5rem}
+  .ph-code{font-size:1.05rem}
+  .ph-status{margin-left:0}
+  /* Footer empilé */
+  .ft{flex-direction:column;gap:.35rem;text-align:center}
+  .fr{text-align:center}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="logo">Ur<em>work</em></div>
+  <div class="ref">Interactive annex &middot; <b>FIG&ndash;03</b> &middot; Juan de la Cierva &middot; The Autogiro</div>
+</header>
+
+<main>
+<div class="ttl">
+  <div class="eyebrow">Five prototypes &middot; The logic of iterative failure &middot; Interactive annex &middot; FIG&ndash;03</div>
+  <h1>From C.1 to C.4<br><em>and beyond</em></h1>
+  <p class="tsub">How Juan de la Cierva turned four failures into one invention &mdash; and what the invention gave to the helicopter</p>
+  <p class="tinfo">Juan de la Cierva · Autogiro prototypes 1920–1923 · The flapping hinge · Legacy in rotary-wing aviation</p>
+</div>
+
+<div class="intro">
+  <p>Each prototype in Cierva's sequence was not a failed attempt at the same goal. It was a different question, asked more precisely. The C.1 asked whether autorotation was physically possible. The C.2 asked whether it could be controlled. The C.3 defined the exact nature of the problem. The C.4 answered it. Click any node to open the full record of what the prototype attempted, what failed, what it taught, and what it transmitted to the next attempt.</p>
+</div>
+
+<div class="legend">
+  <div class="leg-item"><div class="leg-dot" style="background:var(--c1)"></div>C.1 · 1920</div>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--c2)"></div>C.2 · 1921</div>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--c3)"></div>C.3 · 1922</div>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--c4)"></div>C.4 · 1923</div>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--heli)"></div>Legacy · helicopter</div>
+</div>
+
+<div class="timeline-wrap">
+  <div class="spine"></div>
+
+  <!-- C.1 -->
+  <div class="proto" data-p="c1" id="p-c1" role="button" tabindex="0" aria-expanded="false" onclick="tog('c1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog('c1')}">
+    <div class="proto-node">C.1</div>
+    <div class="proto-head">
+      <div class="ph-top">
+        <span class="ph-code">C.1</span>
+        <span class="ph-date">1920</span>
+        <span class="ph-title">The proof of concept</span>
+        <span class="ph-status status-fail">Failed</span>
+        <span class="ph-arrow">▼</span>
+      </div>
+    </div>
+    <div class="proto-body">
+      <div class="pb-grid">
+        <div class="pb-cell">
+          <div class="pb-label">The question it asked</div>
+          <p class="pb-text">Can a rotor spinning freely in the airflow — without being driven by an engine — generate enough lift to support an aircraft in forward flight? The principle of autorotation had been described theoretically, but never demonstrated on a full-scale aircraft. Cierva's C.1 was the first attempt to test it.</p>
+        </div>
+        <div class="pb-cell dark">
+          <div class="pb-label">What failed</div>
+          <p class="pb-text">The C.1 used a <strong>double coaxial rotor</strong> — two superimposed rotors turning in opposite directions — intended to cancel both torque and the dissymmetry of lift. The strategy was theoretically sound but aerodynamically unworkable: the two rotors interfered with each other's airflow, generating unpredictable and asymmetrical lift patterns that made the aircraft impossible to control. Brief hops demonstrated that autorotation was physically real; sustained controlled flight was not.</p>
+        </div>
+        <div class="pb-cell full">
+          <div class="pb-label">What the failure taught — transmitted to C.2</div>
+          <p class="pb-text"><strong>Autorotation works.</strong> The C.1's failure was not a refutation of the concept but a demonstration that the concept needed refinement. The rotor did spin; lift was generated; the principle was confirmed. What remained was the problem of control and stability. The C.1 answered the foundational question and opened the next one: how do you make the rotor reliable?</p>
+        </div>
+      </div>
+    
+      <div class="pb-cell full" style="background:var(--bg4);padding:1.25rem;text-align:center">
+          <div class="pb-label" style="margin-bottom:.75rem">Technical profile</div>
+          <svg viewBox="0 0 340 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:320px">
+  <!-- C.1 — four-blade rotor, square fin at top, open truss fuselage, single wheel -->
+  <g stroke="rgba(240,235,227,0.75)" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Fuselage — open truss structure -->
+    <rect x="100" y="88" width="150" height="22" rx="2"/>
+    <!-- Nose/propeller mount -->
+    <line x1="100" y1="94" x2="80" y2="98"/>
+    <line x1="100" y1="104" x2="80" y2="98"/>
+    <!-- Propeller -->
+    <line x1="80" y1="78" x2="80" y2="118" stroke-width="2.5"/>
+    <!-- Tail section -->
+    <polygon points="250,88 310,92 310,108 250,110"/>
+    <!-- Tail fin vertical -->
+    <polygon points="288,88 310,72 310,92"/>
+    <!-- Rear elevator small -->
+    <line x1="290" y1="106" x2="320" y2="112"/>
+    <line x1="290" y1="110" x2="320" y2="115"/>
+    <!-- Landing gear -->
+    <line x1="140" y1="110" x2="140" y2="138"/>
+    <line x1="140" y1="138" x2="118" y2="140"/>
+    <circle cx="118" cy="143" r="10" stroke-width="1.5"/>
+    <!-- Rotor mast -->
+    <line x1="170" y1="88" x2="170" y2="44"/>
+    <!-- Rotor hub -->
+    <circle cx="170" cy="44" r="5"/>
+    <!-- Four rotor blades — X pattern with slight droop -->
+    <line x1="170" y1="44" x2="90" y2="28"/>
+    <line x1="170" y1="44" x2="252" y2="60"/>
+    <line x1="170" y1="44" x2="100" y2="65"/>
+    <line x1="170" y1="44" x2="242" y2="24"/>
+    <!-- Rotor cables (bracing wires from hub to blade tips) -->
+    <line x1="170" y1="44" x2="90" y2="28" stroke="rgba(240,235,227,0.3)" stroke-width=".7"/>
+    <!-- Square fin at top of mast -->
+    <rect x="155" y="18" width="30" height="22" stroke-width="1.2"/>
+    <!-- Bracing from fuselage to mast base -->
+    <line x1="140" y1="88" x2="165" y2="44"/>
+    <line x1="200" y1="88" x2="175" y2="44"/>
+    <!-- Stub wings on fuselage (lateral struts) -->
+    <line x1="170" y1="88" x2="120" y2="78"/>
+    <line x1="170" y1="88" x2="220" y2="78"/>
+    <line x1="120" y1="78" x2="260" y2="80"/>
+  </g>
+  <!-- Label -->
+  <text x="170" y="158" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="11" fill="rgba(240,235,227,0.4)" font-style="italic">C.1 · 1920</text>
+</svg>
+        </div></div>
+  </div>
+
+  <!-- C.2 -->
+  <div class="proto" data-p="c2" id="p-c2" role="button" tabindex="0" aria-expanded="false" onclick="tog('c2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog('c2')}">
+    <div class="proto-node">C.2</div>
+    <div class="proto-head">
+      <div class="ph-top">
+        <span class="ph-code">C.2</span>
+        <span class="ph-date">1921</span>
+        <span class="ph-title">The stability attempt</span>
+        <span class="ph-status status-fail">Failed</span>
+        <span class="ph-arrow">▼</span>
+      </div>
+    </div>
+    <div class="proto-body">
+      <div class="pb-grid">
+        <div class="pb-cell">
+          <div class="pb-label">The question it asked</div>
+          <p class="pb-text">Can the rotor be designed to produce stable, consistent lift across the full rotation? Cierva refined the blade geometry and the rotor configuration, attempting to eliminate the instability that had prevented the C.1 from achieving controlled flight. The C.2 came close to flying — close enough that Cierva believed the problem was nearly solved.</p>
+        </div>
+        <div class="pb-cell dark">
+          <div class="pb-label">What failed</div>
+          <p class="pb-text">The same instability persisted. The aircraft consistently rolled to one side on takeoff, despite Cierva's modifications to the blade profile. The rolling tendency was more pronounced at lower speeds — precisely when an aircraft is most vulnerable. The C.2 revealed that the problem was not a detail of blade geometry but something more fundamental about the rotor's behaviour in forward flight.</p>
+        </div>
+        <div class="pb-cell full">
+          <div class="pb-label">What the failure taught — transmitted to C.3</div>
+          <p class="pb-text"><strong>The problem is aerodynamic, not geometric.</strong> Modifying blade shape cannot solve the instability because the instability is caused by the physics of forward flight itself: the advancing blade and the retreating blade experience different airspeeds, and therefore generate different lift regardless of their shape. This understanding — that the problem was inherent to rotation in a moving airstream — was the decisive insight that made the C.3 a more precisely targeted experiment.</p>
+        </div>
+      </div>
+    
+      <div class="pb-cell full" style="background:var(--bg4);padding:1.25rem;text-align:center">
+          <div class="pb-label" style="margin-bottom:.75rem">Technical profile</div>
+          <svg viewBox="0 0 340 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:320px">
+  <!-- C.2 — two-blade rotor, fixed wing retained, closed fuselage, large wheel -->
+  <g stroke="rgba(240,235,227,0.75)" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Fuselage — closed, more streamlined -->
+    <path d="M100,90 Q105,84 160,82 L270,84 Q310,86 320,96 Q310,108 270,110 L160,112 Q105,112 100,106 Z"/>
+    <!-- Propeller -->
+    <line x1="100" y1="72" x2="100" y2="124" stroke-width="2.5"/>
+    <circle cx="100" cy="98" r="4" fill="rgba(240,235,227,0.2)" stroke-width="1"/>
+    <!-- Fixed wing — biplane remnant, above fuselage -->
+    <line x1="140" y1="82" x2="80" y2="62"/>
+    <line x1="200" y1="82" x2="280" y2="64"/>
+    <line x1="80" y1="62" x2="280" y2="64"/>
+    <!-- Wing lower surface -->
+    <line x1="140" y1="82" x2="80" y2="68"/>
+    <line x1="200" y1="82" x2="280" y2="70"/>
+    <line x1="80" y1="68" x2="280" y2="70"/>
+    <!-- Wing struts -->
+    <line x1="130" y1="82" x2="130" y2="62"/>
+    <line x1="210" y1="82" x2="210" y2="64"/>
+    <!-- Tail -->
+    <polygon points="280,84 320,88 320,104 280,108"/>
+    <polygon points="300,84 320,68 320,88"/>
+    <!-- Rotor mast -->
+    <line x1="165" y1="82" x2="165" y2="42"/>
+    <circle cx="165" cy="42" r="4"/>
+    <!-- Two-blade rotor — wider span -->
+    <line x1="60" y1="38" x2="270" y2="46" stroke-width="2"/>
+    <!-- Rotor bracing -->
+    <line x1="165" y1="42" x2="60" y2="38" stroke="rgba(240,235,227,0.35)" stroke-width=".8"/>
+    <line x1="165" y1="42" x2="270" y2="46" stroke="rgba(240,235,227,0.35)" stroke-width=".8"/>
+    <!-- Landing gear — tall strut -->
+    <line x1="145" y1="110" x2="135" y2="140"/>
+    <line x1="135" y1="140" x2="115" y2="142"/>
+    <circle cx="112" cy="146" r="11" stroke-width="1.8"/>
+    <!-- Mast bracing to fuselage -->
+    <line x1="140" y1="82" x2="162" y2="44"/>
+    <line x1="195" y1="82" x2="168" y2="44"/>
+  </g>
+  <text x="170" y="158" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="11" fill="rgba(240,235,227,0.4)" font-style="italic">C.2 · 1921</text>
+</svg>
+        </div></div>
+  </div>
+
+  <!-- C.3 -->
+  <div class="proto" data-p="c3" id="p-c3" role="button" tabindex="0" aria-expanded="false" onclick="tog('c3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog('c3')}">
+    <div class="proto-node">C.3</div>
+    <div class="proto-head">
+      <div class="ph-top">
+        <span class="ph-code">C.3</span>
+        <span class="ph-date">1922</span>
+        <span class="ph-title">The problem defined</span>
+        <span class="ph-status status-fail">Failed · decisive</span>
+        <span class="ph-arrow">▼</span>
+      </div>
+    </div>
+    <div class="proto-body">
+      <div class="pb-grid">
+        <div class="pb-cell">
+          <div class="pb-label">The question it asked</div>
+          <p class="pb-text">Can the dissymmetry of lift — the fundamental aerodynamic inequality between advancing and retreating blades in forward flight — be compensated by adjusting the rotor's angle of incidence? The C.3 tested a series of modifications aimed at correcting the imbalance through rotor geometry and blade pitch adjustments.</p>
+        </div>
+        <div class="pb-cell dark">
+          <div class="pb-label">What failed — and what it revealed</div>
+          <p class="pb-text">All modifications failed. But observing the C.3's behaviour on the ground — the specific way the rotor rocked and the aircraft rolled — gave Cierva a precise understanding of the mechanism. The problem was not that the blades were shaped incorrectly. It was that the blades were <em>rigid</em>: locked into the rotor hub, they could not respond to the varying aerodynamic forces they experienced at different points in each rotation. The rigidity was the problem.</p>
+        </div>
+        <div class="pb-cell full">
+          <div class="pb-label">What the failure taught — transmitted to C.4</div>
+          <p class="pb-text"><strong>The solution is articulation, not geometry.</strong> If rigid blades cannot compensate for dissymmetry of lift, the answer is to remove the rigidity — to allow each blade to move independently in response to the aerodynamic forces acting on it. The flapping hinge was the logical conclusion of three years of precisely observed failure. Cierva had not stumbled upon it; he had deduced it by eliminating every other possibility.</p>
+        </div>
+      </div>
+    
+      <div class="pb-cell full" style="background:var(--bg4);padding:1.25rem;text-align:center">
+          <div class="pb-label" style="margin-bottom:.75rem">Technical profile</div>
+          <svg viewBox="0 0 340 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:320px">
+  <!-- C.3 — multi-blade rotor (4–5 blades), no fixed wing, rectangular fuselage, many bracing cables -->
+  <g stroke="rgba(240,235,227,0.75)" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Fuselage — rectangular box, more substantial -->
+    <rect x="108" y="84" width="170" height="28" rx="2"/>
+    <!-- Nose -->
+    <path d="M108,84 Q98,92 108,112"/>
+    <!-- Propeller -->
+    <line x1="98" y1="72" x2="98" y2="124" stroke-width="2.5"/>
+    <!-- Tail — square end -->
+    <rect x="278" y="80" width="32" height="36" rx="1"/>
+    <line x1="295" y1="80" x2="310" y2="60"/>
+    <line x1="295" y1="80" x2="280" y2="60"/>
+    <!-- Rotor mast — central -->
+    <line x1="185" y1="84" x2="185" y2="38"/>
+    <circle cx="185" cy="38" r="5"/>
+    <!-- Five rotor blades with heavy bracing cables from hub -->
+    <line x1="185" y1="38" x2="60" y2="30" stroke-width="1.8"/>
+    <line x1="185" y1="38" x2="310" y2="34" stroke-width="1.8"/>
+    <line x1="185" y1="38" x2="75" y2="54" stroke-width="1.5"/>
+    <line x1="185" y1="38" x2="295" y2="55" stroke-width="1.5"/>
+    <line x1="185" y1="38" x2="185" y2="18" stroke-width="1.5"/>
+    <!-- Many bracing wires — characteristic of C.3 -->
+    <line x1="185" y1="38" x2="60" y2="30" stroke="rgba(240,235,227,0.3)" stroke-width=".6"/>
+    <line x1="185" y1="38" x2="310" y2="34" stroke="rgba(240,235,227,0.3)" stroke-width=".6"/>
+    <line x1="185" y1="38" x2="75" y2="54" stroke="rgba(240,235,227,0.3)" stroke-width=".6"/>
+    <line x1="185" y1="38" x2="295" y2="55" stroke="rgba(240,235,227,0.3)" stroke-width=".6"/>
+    <line x1="185" y1="38" x2="130" y2="84" stroke="rgba(240,235,227,0.3)" stroke-width=".6"/>
+    <line x1="185" y1="38" x2="240" y2="84" stroke="rgba(240,235,227,0.3)" stroke-width=".6"/>
+    <!-- Mast bracing struts -->
+    <line x1="155" y1="84" x2="182" y2="40"/>
+    <line x1="215" y1="84" x2="188" y2="40"/>
+    <!-- Landing gear -->
+    <line x1="155" y1="112" x2="148" y2="140"/>
+    <circle cx="142" cy="144" r="10" stroke-width="1.8"/>
+  </g>
+  <text x="170" y="158" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="11" fill="rgba(240,235,227,0.4)" font-style="italic">C.3 · 1922</text>
+</svg>
+        </div></div>
+  </div>
+
+  <!-- C.4 -->
+  <div class="proto" data-p="c4" id="p-c4" role="button" tabindex="0" aria-expanded="false" onclick="tog('c4')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog('c4')}">
+    <div class="proto-node">C.4</div>
+    <div class="proto-head">
+      <div class="ph-top">
+        <span class="ph-code">C.4</span>
+        <span class="ph-date">17 January 1923</span>
+        <span class="ph-title">The flapping hinge — the solution</span>
+        <span class="ph-status status-success">First flight</span>
+        <span class="ph-arrow">▼</span>
+      </div>
+    </div>
+    <div class="proto-body">
+      <div class="pb-grid">
+        <div class="pb-cell">
+          <div class="pb-label">The innovation</div>
+          <p class="pb-text">A simple articulation — the flapping hinge — was added at the root of each rotor blade. This hinge allowed each blade to rise and fall independently as it rotated. When the advancing blade generated excess lift, it flapped upward; the resulting change in the direction of the relative airflow reduced the blade's effective angle of attack, shedding the excess lift automatically. The retreating blade flapped down, the reverse occurred. The dissymmetry of lift corrected itself continuously, without pilot input.</p>
+        </div>
+        <div class="pb-cell dark">
+          <div class="pb-label">The first flight · Getafe, 17 January 1923</div>
+          <p class="pb-text">Pilot: Alejandro Gómez Spencer. The C.4 flew in stable, controlled forward flight — the first rotary-wing aircraft in history to do so. A demonstration before military authorities followed on 17 January 1923. Cierva was twenty-seven years old. He had been working on the problem for three years and four months.</p>
+        </div>
+        <div class="pb-cell full">
+          <div class="pb-label">The hinge — how it works</div>
+          <p class="pb-text">The elegance of the flapping hinge is that it does not <em>control</em> the dissymmetry of lift — it <em>allows</em> the dissymmetry to resolve itself. By permitting each blade to seek its own aerodynamic equilibrium at every point in the rotation, the hinge converts a structural problem into a dynamic equilibrium. The rotor self-regulates. This is not active control but passive compliance — a mechanical principle that requires no intelligence, no sensor, no actuator. A pivot point placed in exactly the right location.</p>
+        </div>
+      </div>
+      <div class="hinge-diagram">
+        <div class="hd-label">Principle of the flapping hinge — schematic</div>
+      <div class="pb-cell full" style="background:var(--bg4);padding:1.25rem;text-align:center">
+          <div class="pb-label" style="margin-bottom:.75rem">Technical profile &mdash; on launch ramp</div>
+          <svg viewBox="0 0 360 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:340px">
+  <!-- C.4 — two-blade rotor (very long, thin), clean streamlined fuselage, inclined ramp -->
+  <g stroke="rgba(240,235,227,0.75)" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Inclined ramp/plane — the distinctive C.4 feature -->
+    <line x1="30" y1="155" x2="340" y2="120" stroke="rgba(240,235,227,0.45)" stroke-width="1.5" stroke-dasharray="6,3"/>
+    <line x1="30" y1="158" x2="340" y2="123" stroke="rgba(240,235,227,0.2)" stroke-width=".8"/>
+    <!-- Fuselage — streamlined, on the incline -->
+    <path d="M105,118 Q112,108 165,104 L285,106 Q325,108 335,116 Q325,128 285,130 L165,132 Q112,132 105,122 Z"/>
+    <!-- Propeller — front -->
+    <line x1="105" y1="98" x2="105" y2="142" stroke-width="2.8"/>
+    <circle cx="105" cy="120" r="5" fill="rgba(240,235,227,0.15)" stroke-width="1"/>
+    <!-- Tail — squared, with vertical fin -->
+    <rect x="290" y="104" width="38" height="28" rx="1"/>
+    <line x1="310" y1="104" x2="328" y2="82"/>
+    <line x1="295" y1="104" x2="310" y2="82"/>
+    <line x1="310" y1="82" x2="328" y2="82"/>
+    <!-- Small tail horizontal stabiliser -->
+    <line x1="295" y1="128" x2="338" y2="133"/>
+    <!-- Rotor mast — slender, upright -->
+    <line x1="185" y1="106" x2="185" y2="56"/>
+    <!-- Mast bracing -->
+    <line x1="165" y1="106" x2="183" y2="58"/>
+    <line x1="205" y1="106" x2="187" y2="58"/>
+    <!-- Rotor hub — small, articulated (the flapping hinge visible as slightly larger hub) -->
+    <circle cx="185" cy="56" r="6" stroke-width="1.5"/>
+    <circle cx="185" cy="56" r="3" fill="rgba(240,235,227,0.15)"/>
+    <!-- Two-blade rotor — very long and thin, nearly horizontal, slight dihedral -->
+    <line x1="40" y1="52" x2="330" y2="60" stroke-width="2.2"/>
+    <!-- Rotor tip detail -->
+    <line x1="40" y1="52" x2="45" y2="48"/>
+    <line x1="330" y1="60" x2="325" y2="56"/>
+    <!-- Landing gear — on incline, wheels touching ramp -->
+    <line x1="168" y1="130" x2="162" y2="152"/>
+    <circle cx="157" cy="155" r="9" stroke-width="1.5"/>
+    <!-- Flapping hinge annotation lines -->
+    <line x1="185" y1="56" x2="155" y2="40" stroke="rgba(200,148,58,0.6)" stroke-width=".8" stroke-dasharray="3,2"/>
+    <line x1="185" y1="56" x2="215" y2="72" stroke="rgba(200,148,58,0.6)" stroke-width=".8" stroke-dasharray="3,2"/>
+  </g>
+  <!-- Flapping hinge label in gold -->
+  <text x="138" y="36" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="8" fill="rgba(200,148,58,0.8)" letter-spacing=".08em">flapping hinge</text>
+  <line x1="142" y1="37" x2="180" y2="52" stroke="rgba(200,148,58,0.5)" stroke-width=".7"/>
+  <!-- Ramp label -->
+  <text x="50" y="170" font-family="'Cormorant Garamond',serif" font-size="10" fill="rgba(240,235,227,0.3)" font-style="italic">launch ramp</text>
+  <text x="170" y="178" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="11" fill="rgba(240,235,227,0.4)" font-style="italic">C.4 · January 1923</text>
+</svg>
+        </div>
+        <div class="hd-svg-wrap">
+          <svg viewBox="0 0 580 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px">
+            <!-- Hub -->
+            <circle cx="290" cy="100" r="14" fill="none" stroke="rgba(240,235,227,0.35)" stroke-width="1.5"/>
+            <text x="290" y="105" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="11" fill="rgba(240,235,227,0.5)" font-style="italic">hub</text>
+
+            <!-- Left blade (retreating) — flapped down -->
+            <line x1="276" y1="100" x2="70" y2="118" stroke="var(--c3)" stroke-width="2"/>
+            <circle cx="200" cy="108" r="5" fill="var(--bg)" stroke="var(--c3)" stroke-width="1.5"/>
+            <text x="195" y="96" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10" fill="var(--c3)" font-style="italic">flapping hinge</text>
+
+            <!-- Right blade (advancing) — flapped up -->
+            <line x1="304" y1="100" x2="510" y2="82" stroke="var(--c4)" stroke-width="2"/>
+            <circle cx="380" cy="92" r="5" fill="var(--bg)" stroke="var(--c4)" stroke-width="1.5"/>
+
+            <!-- Arrows showing flap direction -->
+            <path d="M510,82 L522,72 L516,84 Z" fill="var(--c4)"/>
+            <path d="M70,118 L58,128 L64,116 Z" fill="var(--c3)"/>
+
+            <!-- Labels -->
+            <text x="530" y="76" font-family="'DM Sans',sans-serif" font-size="9" fill="var(--c4)" letter-spacing=".1em">ADVANCING</text>
+            <text x="530" y="88" font-family="'DM Sans',sans-serif" font-size="9" fill="var(--c4)" letter-spacing=".1em">flaps up ↑</text>
+            <text x="10" y="113" font-family="'DM Sans',sans-serif" font-size="9" fill="var(--c3)" letter-spacing=".1em">RETREATING</text>
+            <text x="10" y="125" font-family="'DM Sans',sans-serif" font-size="9" fill="var(--c3)" letter-spacing=".1em">flaps down ↓</text>
+
+            <!-- Airflow arrow -->
+            <defs>
+              <marker id="arr" markerWidth="8" markerHeight="6" refX="6" refY="3" orient="auto">
+                <polygon points="0 0, 8 3, 0 6" fill="rgba(240,235,227,0.25)"/>
+              </marker>
+            </defs>
+            <line x1="290" y1="170" x2="390" y2="170" stroke="rgba(240,235,227,0.25)" stroke-width="1" marker-end="url(#arr)" stroke-dasharray="4,3"/>
+            <text x="335" y="185" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="9" fill="rgba(240,235,227,0.3)" letter-spacing=".12em">FORWARD FLIGHT →</text>
+
+            <!-- Equality annotation -->
+            <text x="290" y="40" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="12" fill="rgba(240,235,227,0.45)" font-style="italic">lift equalised by passive articulation</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HELICOPTER LEGACY -->
+  <div class="proto" data-p="heli" id="p-heli" role="button" tabindex="0" aria-expanded="false" onclick="tog('heli')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tog('heli')}">
+    <div class="proto-node" style="font-size:.6rem;letter-spacing:.05em">H</div>
+    <div class="proto-head">
+      <div class="ph-top">
+        <span class="ph-code" style="font-size:1rem">Legacy</span>
+        <span class="ph-date">1940s → present</span>
+        <span class="ph-title">The flapping hinge in the helicopter</span>
+        <span class="ph-status status-legacy">Transmitted</span>
+        <span class="ph-arrow">▼</span>
+      </div>
+    </div>
+    <div class="proto-body">
+      <div class="pb-grid">
+        <div class="pb-cell">
+          <div class="pb-label">How the solution survived the machine</div>
+          <p class="pb-text">The autogiro did not become the dominant rotary-wing aircraft. The helicopter, with its powered rotor and capacity for hover, eventually superseded it for most applications. But the helicopter could not have become reliable without solving the same dissymmetry-of-lift problem that Cierva had solved in 1922. Igor Sikorsky and his contemporaries adopted the flapping hinge — and variations of it — directly into helicopter rotor design. Cierva's patent, his engineering documentation, and his published analysis of the problem were the primary source.</p>
+        </div>
+        <div class="pb-cell dark">
+          <div class="pb-label">What was lost — and what was not</div>
+          <p class="pb-text">The autogiro's specific advantage — inability to stall, extremely low minimum speed, safety in gusty conditions — was not transferred to the helicopter. The helicopter is more capable in many respects but not inherently safer at low speed. Cierva's original goal (an aircraft that could not fall) was achieved in the autogiro and only partially in the helicopter. The solution survived; the specific safety advantage did not fully transfer.</p>
+        </div>
+        <div class="pb-cell full">
+          <div class="pb-label">The open question — FIG&ndash;03</div>
+          <p class="pb-text">Cierva died at Croydon Airport in December 1936, killed in the crash of a KLM Douglas DC-2 — a conventional fixed-wing aircraft. He had spent seventeen years solving the problem of the stall and was killed in an aircraft that stalled. His invention — the flapping hinge — continues to operate in every articulated rotor helicopter flying today. <strong>The solution outlived the machine, and the machine outlived its inventor.</strong> What does it mean for the flapping hinge to be Cierva's most lasting work, when Cierva himself was trying to build something else entirely?</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="struct-note">
+  <p><strong>On the sequence:</strong> The five entries above are not strictly five prototypes — the C.1 through C.4 are prototypes; the Legacy entry maps the transmission of the flapping hinge into helicopter design. The sequence is presented as a creative logic rather than a purely technical history: each node records what a given attempt attempted, what it failed to achieve, and what it made possible for the next attempt. See the article for the full argument. See TC&ndash;09 · Failure and TC&ndash;09a · Beckett's Imperative for the conceptual framework.</p>
+</div>
+
+<div class="closing">
+  <p>Sources: Juan de la Cierva and Don Rose, <em>Wings of Tomorrow</em> (Brewer, Warren &amp; Putnam, 1931); C. Dornier, "The Autogiro and Its Development," <em>Journal of the Royal Aeronautical Society</em>, 1930; Bruce H. Charnov, <em>From Autogiro to Gyroplane</em> (Praeger, 2003). Part of Urwork FIG&ndash;03 &middot; urwork.substack.com &middot; urwork-encyclopedia.github.io</p>
+</div>
+
+</main>
+
+<footer class="ft">
+  <div class="fl">Ur<em>work</em></div>
+  <div class="fr">Encyclopedia of the Creative Process<br>urwork.substack.com &middot; urwork-encyclopedia.github.io</div>
+</footer>
+
+<script>
+function tog(p){
+  const el = document.getElementById('p-'+p);
+  const wasOpen = el.classList.contains('open');
+  document.querySelectorAll('.proto.open').forEach(x=>{
+    x.classList.remove('open');
+    x.setAttribute('aria-expanded','false');
+  });
+  if(!wasOpen){
+    el.classList.add('open');
+    el.setAttribute('aria-expanded','true');
+    // Ramener le nœud activé en haut de la fenêtre
+    setTimeout(()=>{ el.scrollIntoView({behavior:'smooth',block:'start'}); }, 50);
+  }
+}
+</script>
+</body>
+</html>
