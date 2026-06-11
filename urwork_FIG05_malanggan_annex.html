@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urwork — The Making of a Malanggan · FIG–05 · Interactive Annex</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0c0a07;--bg2:#141210;
+  --bone:#f0ebe3;--bone2:rgba(240,235,227,0.82);--bone3:rgba(240,235,227,0.52);
+  --accent:#c0392b;--ab:#e05a4d;--gold:#c8943a;--grn:#5a9c7e;--blu:#3a7090;
+  --cormorant:'Cormorant Garamond',serif;--sans:'DM Sans',sans-serif;
+}
+html{background:var(--bg);color:var(--bone);font-family:var(--sans);font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{max-width:100%;margin:0;padding:0}
+
+.hdr{padding:1.75rem 4rem 1.5rem;border-bottom:.5px solid rgba(240,235,227,0.1);display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:var(--cormorant);font-size:1.3rem;font-weight:300;letter-spacing:-.02em}
+.logo em{font-style:italic;color:var(--ab)}
+.ref{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--bone3)}
+.ref b{color:var(--ab)}
+
+.ttl{padding:3.5rem 4rem 2.5rem;text-align:center;position:relative}
+.ttl::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(160,24,24,0.07),transparent 65%);pointer-events:none}
+.eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ab);margin-bottom:1.1rem;opacity:0;animation:fu .7s .1s ease forwards}
+.ttl h1{font-family:var(--cormorant);font-size:clamp(2.2rem,5vw,4rem);font-weight:300;line-height:1.1;letter-spacing:-.02em;color:var(--bone);margin-bottom:.6rem;opacity:0;animation:fu .7s .3s ease forwards}
+.ttl h1 em{font-style:italic;color:rgba(240,235,227,0.72)}
+.tsub{font-family:var(--cormorant);font-style:italic;font-size:1.05rem;color:var(--bone3);margin-bottom:2.25rem;opacity:0;animation:fu .7s .5s ease forwards}
+.anav-bar{position:sticky;top:0;z-index:100;background:rgba(12,10,7,0.97);backdrop-filter:blur(8px);border-bottom:.5px solid rgba(240,235,227,0.1);padding:.6rem 4rem;display:flex;justify-content:center;gap:.35rem;flex-wrap:wrap}
+.anav{display:flex;justify-content:center;gap:.35rem;flex-wrap:wrap;opacity:0;animation:fu .7s .7s ease forwards}
+.abt{display:flex;align-items:center;gap:.4rem;padding:.5rem 1rem;border:.5px solid rgba(240,235,227,0.18);border-radius:3px;background:transparent;color:var(--bone3);font-family:var(--sans);font-size:.78rem;font-weight:300;cursor:pointer;transition:border-color .3s,color .3s,background .3s;letter-spacing:.02em}
+.abt:hover,.abt.on{border-color:var(--accent);color:var(--bone);background:rgba(192,57,43,0.1)}
+.abt .n{font-family:var(--cormorant);font-size:1rem;font-style:italic;color:var(--ab);font-weight:300}
+
+@keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+
+.wrap{max-width:1040px;margin:0 auto;padding:0 4rem 5rem}
+.act{display:none;opacity:0;transform:translateY(16px);transition:opacity .45s ease,transform .45s ease}
+.act.vis{display:block}
+.act.on{opacity:1;transform:translateY(0)}
+
+.ahdr{display:flex;align-items:center;gap:1.5rem;padding:2.25rem 0 1.75rem;border-bottom:.5px solid rgba(240,235,227,0.1);margin-bottom:2.25rem}
+.anum{font-family:var(--cormorant);font-size:3.8rem;font-weight:300;font-style:italic;color:rgba(240,235,227,0.55);line-height:1;flex-shrink:0}
+.albl{font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--ab);margin-bottom:.25rem}
+.atitle{font-family:var(--cormorant);font-size:1.9rem;font-weight:300;color:var(--bone);line-height:1.1}
+.atitle em{font-style:italic;color:rgba(240,235,227,0.72)}
+
+.sc{display:grid;grid-template-columns:1fr 1fr;gap:2.75rem;align-items:start;margin-bottom:2rem}
+.sc.rev{direction:rtl}.sc.rev>*{direction:ltr}
+
+.img-panel{border:.5px solid rgba(240,235,227,0.08);border-radius:5px;overflow:hidden;background:var(--bg2)}
+.img-panel img{width:100%;display:block}
+.img-cap{font-size:.72rem;color:rgba(240,235,227,0.72);padding:.6rem .9rem;font-style:italic;border-top:.5px solid rgba(240,235,227,0.07);line-height:1.55}
+
+/* ANNOTATED FIGURE — Act II */
+.fig-outer{border:.5px solid rgba(240,235,227,0.08);border-radius:5px;overflow:hidden;background:#f5f1ea}
+.fig-inner{position:relative;display:block}
+.fig-inner img{width:100%;display:block;vertical-align:bottom}
+.az{position:absolute;border-radius:4px;cursor:pointer;transition:opacity .22s;border-width:2px;border-style:solid;pointer-events:auto}
+.az:hover{opacity:0.88!important}
+.az.lit{opacity:0.85!important;box-shadow:0 0 0 2px white}
+.fig-cap{font-size:.72rem;color:rgba(30,20,10,0.45);padding:.6rem .9rem;font-style:italic;border-top:.5px solid rgba(30,20,10,0.08);line-height:1.55;background:#f5f1ea}
+
+.eg{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.9rem 0}
+.ei{padding:.6rem .75rem;border-radius:3px;border:.5px solid;cursor:pointer;transition:filter .2s}
+.ei:hover{filter:brightness(1.35)}
+.ec{font-size:8px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:.15rem;opacity:.82}
+.en{font-size:.78rem;font-weight:500;margin-bottom:.12rem}
+.em{font-size:.71rem;line-height:1.5;opacity:.82;font-style:italic}
+.ei.c1{background:rgba(200,148,58,.12);border-color:rgba(200,148,58,.4);color:var(--gold)}
+.ei.c2{background:rgba(90,156,126,.12);border-color:rgba(90,156,126,.4);color:var(--grn)}
+.ei.c3{background:rgba(192,57,43,.12);border-color:rgba(192,57,43,.4);color:#e07868}
+.ei.c4{background:rgba(58,112,144,.12);border-color:rgba(58,112,144,.4);color:#7ab8d8}
+.ei.c8{background:rgba(240,235,227,.05);border-color:rgba(240,235,227,.18);color:rgba(240,235,227,.85)}
+
+.st{padding:.25rem 0}
+.stag{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,235,227,0.72);margin-bottom:.6rem}
+.st h3{font-family:var(--cormorant);font-size:1.25rem;font-weight:400;color:var(--bone);margin-bottom:.65rem;line-height:1.25}
+.st p{font-size:.88rem;line-height:1.85;color:var(--bone2);margin-bottom:.8rem}
+.st p b{color:var(--bone);font-weight:500}
+
+.ab{background:rgba(240,235,227,.03);border-left:2px solid var(--accent);padding:1.05rem 1.35rem;border-radius:0 4px 4px 0;margin:1.1rem 0}
+.abl{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ab);margin-bottom:.35rem}
+.ab p{font-size:.83rem;line-height:1.8;color:var(--bone2);margin:0;font-style:italic}
+
+.cl{display:flex;gap:.65rem;flex-wrap:wrap;margin:.8rem 0}
+.cp{display:flex;align-items:center;gap:.35rem;font-size:.75rem;color:var(--bone2)}
+.cs{width:11px;height:11px;border-radius:2px;flex-shrink:0}
+
+/* TOOLTIP */
+.tip{position:fixed;background:rgba(8,6,3,0.97);border:.5px solid rgba(240,235,227,.2);border-radius:5px;padding:.75rem 1rem;max-width:260px;z-index:9999;pointer-events:none;display:none;box-shadow:0 10px 32px rgba(0,0,0,.6)}
+.tc{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--ab);margin-bottom:.28rem}
+.tn{font-size:.83rem;font-weight:500;color:var(--bone);margin-bottom:.22rem;line-height:1.3}
+.tt{font-size:.76rem;line-height:1.65;color:var(--bone2)}
+
+.nr{display:flex;justify-content:space-between;align-items:center;padding:1.6rem 0 .4rem;border-top:.5px solid rgba(240,235,227,0.08);margin-top:2.25rem}
+.nb{display:flex;align-items:center;gap:.4rem;padding:.55rem 1.25rem;border:.5px solid rgba(240,235,227,.18);border-radius:3px;background:transparent;color:var(--bone3);font-family:var(--sans);font-size:.78rem;font-weight:300;cursor:pointer;letter-spacing:.02em;transition:border-color .3s,color .3s,background .3s}
+.nb:hover{border-color:var(--accent);color:var(--bone)}
+.nb:disabled{opacity:.18;cursor:default}
+.nb.pr{background:var(--accent);border-color:var(--accent);color:white}
+.nb.pr:hover{background:var(--ab)}
+.dots{display:flex;gap:.4rem}
+.dot{width:6px;height:6px;border-radius:50%;background:rgba(240,235,227,.18);transition:background .3s}
+.dot.on{background:var(--accent)}
+
+.ft{border-top:.5px solid rgba(240,235,227,.08);padding:1.25rem 4rem;display:flex;justify-content:space-between;align-items:center;max-width:1040px;margin:0 auto}
+.fr{font-size:.72rem;color:rgba(240,235,227,.65);line-height:1.6}
+
+@media(max-width:700px){
+  .hdr,.ttl,.wrap,.ft{padding-left:1.25rem;padding-right:1.25rem}
+  .sc,.sc.rev{grid-template-columns:1fr;direction:ltr}
+  .eg{grid-template-columns:1fr}
+  .ttl h1{font-size:clamp(1.8rem,8vw,3rem)}
+  .anav-bar{padding:.5rem 1.25rem}
+  .anav{gap:.25rem}
+  .abt{padding:.45rem .75rem;font-size:.74rem}
+  .nb{min-height:44px;padding:.55rem 1rem}
+  .ft{flex-direction:column;gap:.35rem;text-align:center}
+  .fr{text-align:center}
+  /* Zone-display : hauteur fixe pour éviter les sauts */
+  .zd{height:200px;overflow-y:auto}
+  /* Tooltip désactivé sur mobile */
+  .tip{display:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- TOOLTIP -->
+<div class="tip" id="tip">
+  <div class="tc" id="tc"></div>
+  <div class="tn" id="tn"></div>
+  <div class="tt" id="tt"></div>
+</div>
+
+<header class="hdr">
+  <div class="logo">Ur<em>work</em></div>
+  <div class="ref">Interactive annex · <b>FIG–05</b> · The Malanggan of New Ireland</div>
+</header>
+
+<main>
+<div class="ttl">
+  <div class="eyebrow">Process documentation · Four acts · Interactive annex</div>
+  <h1>The Making of<br><em>a Malanggan</em></h1>
+  <p class="tsub">From the sacred enclosure to ritual destruction — New Ireland, Papua New Guinea</p>
+</div>
+
+<div class="anav-bar">
+  <button class="abt on" onclick="show(1)"><span class="n">I</span> The Sacred Block</button>
+  <button class="abt" onclick="show(2)"><span class="n">II</span> Incarnation</button>
+  <button class="abt" onclick="show(3)"><span class="n">III</span> The Revelation</button>
+  <button class="abt" onclick="show(4)"><span class="n">IV</span> The Death</button>
+</div>
+
+<div class="wrap">
+
+<!-- ACT I -->
+<div class="act vis on" id="a1">
+<div class="ahdr">
+  <div class="anum">I</div>
+  <div><div class="albl">Act I · Fabrication</div><div class="atitle">The Sacred <em>Block</em></div></div>
+</div>
+<div class="sc">
+  <div class="img-panel">
+    <img src="Urwork%20FIG-05.%20Annexe.%20Ill-01.jpg" alt="Sculptor's workshop at Lainaru, near Lugagun, New Ireland, 1929">
+    <div class="img-cap">Sculptor's workshop at Lainaru, near Lugagun, New Ireland. Photo: P. Gerhard Peekel, <em>Anthropos</em> XXIV, 1929.</div>
+  </div>
+  <div class="st">
+    <div class="stag">Act I · Stage 1 of 4</div>
+    <h3>The sculptor enters the maradan</h3>
+    <p>The making of a malanggan begins in secrecy. The sculptor works within an enclosed space — the <b>maradan</b> — screened from the community. His activity is simultaneously a craft act and a sacred act: the opening of the wood to the motifs commissioned by the right-holder.</p>
+    <p>The wood most used is <i>alstonia</i> (<em>Alstonia scholaris</em>, known locally as milkwood for its milky sap) — light, soft, adapted to the intricate openwork patterns that give the malanggan its characteristic appearance: a figure suspended in a cage of interlacing forms. Multiple sculptures may be fabricated simultaneously for the same ceremony, each carrying the rights of a different clan or lineage.</p>
+    <p>The sculptor does not invent. He <b>actualises a mental prototype</b> transmitted through rights. His technical mastery and his ritual knowledge are inseparable — one without the other is insufficient.</p>
+    <div class="ab">
+      <div class="abl">The double constraint</div>
+      <p>Technical constraint (the grain of the wood, the structural logic of the openwork) and ritual constraint (the specific motifs belonging to the commissioning clan) are inseparable. The sculptor has no freedom of invention — and yet the result achieves a formal complexity that no unconstrained process could have reached. The constraint is the instrument.</p>
+    </div>
+  </div>
+</div>
+<div class="nr">
+  <button class="nb" disabled>← Previous</button>
+  <div class="dots"><div class="dot on"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+  <button class="nb pr" onclick="show(2)">Act II: Incarnation →</button>
+</div>
+</div>
+
+<!-- ACT II -->
+<div class="act" id="a2">
+<div class="ahdr">
+  <div class="anum">II</div>
+  <div><div class="albl">Act II · The skin · Hover each zone to read</div><div class="atitle">Incarn<em>ation</em></div></div>
+</div>
+<div class="sc">
+  <div>
+    <div class="fig-outer">
+      <div class="fig-inner" id="figinner">
+        <img id="figimg" src="Urwork FIG-05. Annexe. Ill-02.jpg" alt="Malanggan figure — analytical drawing after British Museum, New Ireland, 1884">
+        
+      <div class="az" id="az1" role="button" tabindex="0" aria-label="Zone A: Vegetal fibre headdress"
+           style="background:rgba(200,148,58,0.45);border:1.8px solid rgba(200,148,58,0.85);opacity:0.32"
+           onmouseenter="showTip(event,'ZONE A','Vegetal fibre headdress · tatanua style')"
+           onmouseleave="hideTip()" onclick="activateZone('az1')"
+           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();activateZone('az1')}"></div>
+      <div class="az" id="az2" role="button" tabindex="0" aria-label="Zone B: Shell eyes, boar tusks"
+           style="background:rgba(90,156,126,0.38);border:1.8px solid rgba(90,156,126,0.85);opacity:0.32"
+           onmouseenter="showTip(event,'ZONE B','Shell eyes · matanggan · Boar tusks')"
+           onmouseleave="hideTip()" onclick="activateZone('az2')"
+           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();activateZone('az2')}"></div>
+      <div class="az" id="az3" role="button" tabindex="0" aria-label="Zone C: Upper body, clan emblems"
+           style="background:rgba(192,57,43,0.32);border:1.8px solid rgba(192,57,43,0.82);opacity:0.32"
+           onmouseenter="showTip(event,'ZONE C','Upper body · lateral figures · clan emblems')"
+           onmouseleave="hideTip()" onclick="activateZone('az3')"
+           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();activateZone('az3')}"></div>
+      <div class="az" id="az4" role="button" tabindex="0" aria-label="Zone D: Central figure, fish motifs"
+           style="background:rgba(200,148,58,0.32);border:1.8px solid rgba(200,148,58,0.75);opacity:0.32"
+           onmouseenter="showTip(event,'ZONE D','Central figure · fish motifs · territorial rights')"
+           onmouseleave="hideTip()" onclick="activateZone('az4')"
+           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();activateZone('az4')}"></div>
+      <div class="az" id="az5" role="button" tabindex="0" aria-label="Zone E: Lower body, geometric patterns"
+           style="background:rgba(58,112,144,0.32);border:1.8px solid rgba(58,112,144,0.8);opacity:0.32"
+           onmouseenter="showTip(event,'ZONE E','Lower body · chevron and diamond patterns')"
+           onmouseleave="hideTip()" onclick="activateZone('az5')"
+           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();activateZone('az5')}"></div>
+      <div class="az" id="az6" role="button" tabindex="0" aria-label="Zone F: Geometric base"
+           style="background:rgba(122,90,144,0.32);border:1.8px solid rgba(122,90,144,0.8);opacity:0.32"
+           onmouseenter="showTip(event,'ZONE F','Geometric base · trellis patterns')"
+           onmouseleave="hideTip()" onclick="activateZone('az6')"
+           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();activateZone('az6')}"></div>
+      <div class="az" id="az7" role="button" tabindex="0" aria-label="Zone G: Wooden post"
+           style="background:rgba(200,148,58,0.28);border:1.8px solid rgba(200,148,58,0.7);opacity:0.32"
+           onmouseenter="showTip(event,'ZONE G','Wooden post · insertion point')"
+           onmouseleave="hideTip()" onclick="activateZone('az7')"
+           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();activateZone('az7')}"></div>
+      </div>
+      <div class="fig-cap">Malanggan figure — analytical drawing after British Museum, New Ireland, 1884. Hover each coloured zone to read its significance.</div>
+    </div>
+  </div>
+  <div class="st">
+    <div class="stag">Act II · Stage 2 of 4 · Hover the coloured zones</div>
+    <h3>Reading the surface</h3>
+    <p>The sculpture receives its <b>skin</b> in two operations: first the openwork carving exposes the skeletal structure of motifs; then painted patterns invest every surface. The result is a dense superimposition of visual vocabularies — each zone carrying a specific meaning, a specific right, a specific social obligation.</p>
+    <p><b>Hover each coloured zone</b> on the figure, or click a label below, to read the malanggan as its makers intended — as a system of rights, titles, and cosmological statements encoded in wood, pigment, and shell.</p>
+    <div class="cl">
+      <div class="cp"><div class="cs" style="background:#a01818"></div>Red — Clan lineage, ritual warmth &amp; ancestral power</div>
+      <div class="cp"><div class="cs" style="background:#0a0806;border:.5px solid rgba(240,235,227,0.3)"></div>Black — Ritual secrecy, containment &amp; optical contrast</div>
+      <div class="cp"><div class="cs" style="background:#e8e4dc"></div>White lime — Light, ritual purity &amp; the lifting of mourning</div>
+    </div>
+    <div class="eg">
+      <div class="ei c1" onclick="litZ('az1')">
+        <div class="ec">ZONE A</div>
+        <div class="en">Vegetal fibre headdress</div>
+        <div class="em">Tatanua style · mourning period · social transition</div>
+      </div>
+      <div class="ei c2" onclick="litZ('az2')">
+        <div class="ec">ZONE B</div>
+        <div class="en">Shell eyes · boar tusks</div>
+        <div class="em">The gaze · rank and wealth</div>
+      </div>
+      <div class="ei c3" onclick="litZ('az3')">
+        <div class="ec">ZONE C</div>
+        <div class="en">Upper body · lateral figures</div>
+        <div class="em">Clan emblems · allied lineages</div>
+      </div>
+      <div class="ei c1" onclick="litZ('az4')">
+        <div class="ec">ZONE D</div>
+        <div class="en">Central figure · fish motifs</div>
+        <div class="em">Fishing rights · territorial claims</div>
+      </div>
+      <div class="ei c4" onclick="litZ('az5')">
+        <div class="ec">ZONE E</div>
+        <div class="en">Lower body · chevrons</div>
+        <div class="em">Exchange obligations · dual moiety</div>
+      </div>
+      <div class="ei c4" onclick="litZ('az6')">
+        <div class="ec">ZONE F</div>
+        <div class="en">Geometric base</div>
+        <div class="em">Ritual fence structures · spirit threshold</div>
+      </div>
+      <div class="ei c1" onclick="litZ('az7')">
+        <div class="ec">ZONE G</div>
+        <div class="en">Wooden post</div>
+        <div class="em">Boundary of the sacred</div>
+      </div>
+      <div class="ei c8" style="cursor:default;opacity:0.55" title="Zone H — overall tricolour palette: not a localised zone">
+        <div class="ec">ZONE H</div>
+        <div class="en">Tricolour palette</div>
+        <div class="em">Red · black · white — cosmological grammar</div>
+      </div>
+    </div>
+    <div class="ab">
+      <div class="abl">Public and secret readings · Derlon 1997</div>
+      <p>The surface carries two simultaneous readings: motifs legible to all community members, and motifs whose meaning is accessible only to initiates and right-holders. The same surface is simultaneously a public statement and a restricted text. The European eye receives only the first layer.</p>
+    </div>
+  </div>
+</div>
+<div class="nr">
+  <button class="nb" onclick="show(1)">← Act I</button>
+  <div class="dots"><div class="dot"></div><div class="dot on"></div><div class="dot"></div><div class="dot"></div></div>
+  <button class="nb pr" onclick="show(3)">Act III: The Revelation →</button>
+</div>
+</div>
+
+<!-- ACT III -->
+<div class="act" id="a3">
+<div class="ahdr">
+  <div class="anum">III</div>
+  <div><div class="albl">Act III · Ceremony</div><div class="atitle">The <em>Revelation</em></div></div>
+</div>
+<div class="sc rev">
+  <div class="img-panel">
+    <img src="Urwork%20FIG-05.%20Annexe.%20Ill-03.jpg" alt="Malanggan display house at Medina, New Ireland. Photo Felix Speiser">
+    <div class="img-cap">Malanggan display house at Medina, New Ireland. Photo: Felix Speiser. Museum für Völkerkunde, Basel.</div>
+  </div>
+  <div class="st">
+    <div class="stag">Act III · Stage 3 of 4</div>
+    <h3>The soul's passage</h3>
+    <p>The completed malanggan is installed in a temporary exhibition house alongside other effigies. The assembled figures represent multiple clans, multiple lineages, multiple sets of rights. Chanting and the dances of the <i>Tatanua</i> mask surround the display for several days.</p>
+    <p>The sculpture serves as a <b>temporary receptacle for the soul of the deceased</b>. During the ceremony, the spirit makes its final passage from the world of the living to the world of the ancestors. The malanggan is neither portrait nor memorial. It is a vehicle.</p>
+    <p>At this moment, a specific individual receives the <b>right to commission the next malanggan</b> of each type displayed — the mental prototype as a binding social obligation, carried invisibly until the next death requires its actualisation.</p>
+    <div class="ab">
+      <div class="abl">Memory, not history · Küchler 1988</div>
+      <p>The ceremony does not produce history — it produces memory. What the community receives is not an object to keep but an obligation to remember. The destruction that follows is not the ending of the ceremony. It is its completion.</p>
+    </div>
+  </div>
+</div>
+<div class="nr">
+  <button class="nb" onclick="show(2)">← Act II</button>
+  <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot on"></div><div class="dot"></div></div>
+  <button class="nb pr" onclick="show(4)">Act IV: The Death →</button>
+</div>
+</div>
+
+<!-- ACT IV -->
+<div class="act" id="a4">
+<div class="ahdr">
+  <div class="anum">IV</div>
+  <div><div class="albl">Act IV · Destruction · Transmission</div><div class="atitle">The Death of <em>the Object</em></div></div>
+</div>
+<div class="sc">
+  <div class="img-panel">
+    <img src="Urwork FIG-05. Annexe. Ill-04.jpg" alt="The malanggan abandoned to the forest after the ceremony">
+    <div class="img-cap">The malanggan abandoned to the forest after the ceremony. Vines reclaim the surface. The decomposition is not a failure — it is the completion of the work's function.</div>
+  </div>
+  <div class="st">
+    <div class="stag">Act IV · Stage 4 of 4</div>
+    <h3>Object into obligation</h3>
+    <p>The ceremony ends. The malanggan is <b>abandoned</b> — left to decompose, returned to the forest, the sea, or the elements. What this image shows is not destruction in the European sense. It is completion. The work has done what it was made to do.</p>
+    <p>What survives is the <b>mental prototype</b> — held in the memory of the right-holder, who now bears the obligation of the next actualisation. He carries the figure, invisible, until the next death requires it. The longer he carries it, the more binding the obligation, the more precisely the next figure must replicate what only he remembers.</p>
+    <p>The vines reclaiming the surface, the pigments fading, the wood returning to earth: this is the malanggan fulfilling its logic. Preservation would have been a betrayal — vital energy left undissipated, a social obligation deferred indefinitely.</p>
+    <div class="ab">
+      <div class="abl">Küchler 1988</div>
+      <p>"Objects that are made to be dismantled confound time not through permanence, but through renewal, and create time not as history, but as memory." The destruction does not end the work. It converts it — from object into obligation, from matter into memory. The forest completes what the ceremony began.</p>
+    </div>
+    <p style="font-size:.83rem;line-height:1.8;color:var(--bone2);margin-top:1rem">Since 1884, some malanggan have taken a different path — sold to European collectors, as sale was an acceptable form of removal from ritual circulation. The figure in the British Museum has survived its own death. It now exists for a gaze for which it was not made. What it transmits to that gaze is real — but it is not what it was made to transmit.</p>
+  </div>
+</div>
+<div class="nr">
+  <button class="nb" onclick="show(3)">← Act III</button>
+  <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot on"></div></div>
+  <button class="nb" onclick="show(1)">↺ Restart from Act I</button>
+</div>
+</div>
+
+</div><!-- /wrap -->
+
+</main>
+
+<footer class="ft">
+  <div class="fr">
+    Interactive annex · FIG–05 · The Malanggan of New Ireland<br>
+    Illustrations: Gemini / Urwork, 2026. After British Museum collection, New Ireland, acquired 1884.<br>
+    Sources: Küchler 1988, 2002 · Derlon 1994, 1997 · Gell 1998 · Riegl 1903
+  </div>
+  <div class="logo">Ur<em>work</em></div>
+</footer>
+
+<script>
+let cur = 1;
+
+// Zone data [top%, left%, width%, height%]
+const ZONES = [[0, 18, 64, 7], [7, 14, 72, 13], [20, 8, 84, 19], [39, 10, 80, 19], [58, 12, 76, 14], [72, 15, 70, 12], [84, 30, 40, 9]];
+
+function placeZones() {
+  const img = document.getElementById('figimg');
+  const inner = document.getElementById('figinner');
+  const ih = img.offsetHeight;
+  const iw = img.offsetWidth;
+  ZONES.forEach((z, i) => {
+    const el = document.getElementById('az' + (i+1));
+    if (!el) return;
+    el.style.top    = (z[0]/100 * ih) + 'px';
+    el.style.left   = (z[1]/100 * iw) + 'px';
+    el.style.width  = (z[2]/100 * iw) + 'px';
+    el.style.height = (z[3]/100 * ih) + 'px';
+  });
+}
+
+window.addEventListener('resize', placeZones);
+// Place zones robustly: after DOM ready, and when image loads
+function initZones() {
+  const img = document.getElementById('figimg');
+  if (!img) return;
+  if (img.complete && img.naturalHeight > 0) {
+    placeZones();
+  } else {
+    img.addEventListener('load', placeZones);
+  }
+}
+document.addEventListener('DOMContentLoaded', initZones);
+
+function show(n) {
+  document.querySelectorAll('.abt').forEach((b,i) => b.classList.toggle('on', i+1===n));
+  const o = document.getElementById('a'+cur);
+  if(o){ o.classList.remove('on'); setTimeout(()=>o.classList.remove('vis'), 320); }
+  setTimeout(()=>{
+    const x = document.getElementById('a'+n);
+    if(x){ x.classList.add('vis'); setTimeout(()=>x.classList.add('on'), 20); }
+    // Re-place zones when switching to act 2
+    if(n === 2) setTimeout(placeZones, 50);
+  }, 320);
+  cur = n;
+  window.scrollTo({top: document.querySelector('.wrap').offsetTop - 20, behavior: 'smooth'});
+}
+
+function litZ(id) { activateZone(id); }
+
+let activeZoneId = null;
+function activateZone(id) {
+  document.querySelectorAll('.az').forEach(z => { z.style.opacity='.32'; z.classList.remove('lit'); });
+  document.querySelectorAll('.ei').forEach(el => el.classList.remove('active'));
+  const z = document.getElementById(id);
+  if(!z) return;
+  z.style.opacity = '.85';
+  z.classList.add('lit');
+  activeZoneId = id;
+  // Activer le label correspondant si présent
+  const idx = parseInt(id.replace(/\D/g,'')) - 1;
+  const labels = document.querySelectorAll('.ei');
+  if(labels[idx]) labels[idx].classList.add('active');
+  // Écrire dans le panneau via les données du tooltip
+  const zd = document.getElementById('zd');
+  if(zd && z._zdata) {
+    zd.innerHTML = '';
+    const code = document.createElement('div'); code.className='zd-code'; code.textContent=z._zdata[0];
+    const name = document.createElement('div'); name.className='zd-name'; name.textContent=z._zdata[1];
+    const text = document.createElement('div'); text.className='zd-text'; text.textContent=z._zdata[2];
+    zd.append(code,name,text);
+    zd.scrollTop = 0;
+  }
+}
+
+const tp = document.getElementById('tip');
+function showTip(e, c, n, t) {
+  document.getElementById('tc').textContent = c;
+  document.getElementById('tn').textContent = n;
+  document.getElementById('tt').textContent = '';
+  tp.style.display = 'block';
+  moveTip(e);
+}
+function moveTip(e) {
+  const x=e.clientX, y=e.clientY,
+        tw=tp.offsetWidth, th=tp.offsetHeight,
+        vw=window.innerWidth, vh=window.innerHeight;
+  let l = x+18, t = y-14;
+  if(l+tw > vw-8) l = x-tw-18;
+  if(t+th > vh-8) t = y-th+14;
+  tp.style.left = l+'px';
+  tp.style.top  = t+'px';
+}
+function hideTip() { tp.style.display='none'; }
+document.addEventListener('mousemove', e => { if(tp.style.display==='block') moveTip(e); });
+
+// Initialisation des données de zones pour le panneau mobile
+const ZDATA5 = {
+  az1: ['ZONE A', 'Vegetal fibre headdress · tatanua style', 'The voluminal headdress imitates the traditional mourning hairstyle known as tatanua — made of plant fibres, beaten bark and moss, often dyed yellow and red. There is no animal fur on malanggan figures; New Ireland has no fur-bearing mammals of this kind. The headdress signals that the sculpture belongs to the liminal period of mourning — the transition between two social states.'],
+  az2: ['ZONE B', 'Shell eyes · matanggan · Boar tusks', 'The operculum of Turbo petholatus — inserted last — gives the sculpture its gaze and its life. When the eye is in place, the figure looks back: it becomes a social agent. The boar tusks signal the rank and wealth of the commissioning clan. Only men of elevated standing possess pigs with curved tusks.'],
+  az3: ['ZONE C', 'Upper body · lateral figures · clan emblems', 'The upper torso carries the densest accumulation of clan motifs — frigate birds, serpentine forms, subsidiary figures. Lateral extensions carry the emblems of allied clans or ancestral lineages. The red dominant signals clan lineage and ritual warmth (rarat); the black geometric overlay enforces ritual secrecy and produces the optical contrast that generates the fascination effect described by Gell. Each subsidiary figure is a clause in the clan\'s social charter.'],
+  az4: ['ZONE D', 'Central figure · fish motifs · territorial rights', 'The central figure represents the principal deceased or a founding ancestor. It is surrounded by pisciform forms charting the clan\'s fishing rights — species, zones, seasons of access. Each fish motif is a territorial claim. Serpentine forms interlacing through this zone signal ancestral continuity and underground connections between lineages.'],
+  az5: ['ZONE E', 'Lower body · chevron and diamond patterns', 'The lower register is dominated by geometric patterns — chevrons, diamonds, zigzags — in the tricolour palette. These encode further clan affiliations, exchange obligations, and cosmological positions. The bilateral symmetry mirrors the dual organisation of New Ireland society into two moieties whose mutual obligations structure all social life.'],
+  az6: ['ZONE F', 'Geometric base · trellis patterns', 'The geometric patterns — chevrons, lozenges — on the base are stylised representations of ritual fence structures, and visual expressions of the clan\'s kinship structure and genealogical connections. They encode lineage and group membership, not mat-weaving. Oval motifs may represent ancestral eyes or spirit thresholds at the junction between the living world and the world of the dead.'],
+  az7: ['ZONE G', 'Wooden post · insertion point', 'The raw unfinished post at the base anchored the sculpture in the ground of the exhibition enclosure during the ceremony. Its deliberately undecorated quality contrasts with the dense surface above — marking the boundary between the sacred object and the earth it stands on.']
+};
+document.querySelectorAll('.az').forEach(el => { if(ZDATA5[el.id]) el._zdata = ZDATA5[el.id]; });
+</script>
+</body>
+</html>
